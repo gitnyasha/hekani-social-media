@@ -1,20 +1,22 @@
 class AnswersController < ApplicationController
   def index
-    @answers = Answer.all
+    @question = Question.find(params[:question_id])
+    @answers = @question.answers
     render json: @answers
   end
 
   def show
     @answer = Answer.find(params[:id])
-    @comments = Comment.where(answer_id: @answer.id)
-    render json: { answer: @answer, comments: @comments }
+    render json: { answer: @answer, comments: @answer.comments }
   end
 
   def create
+    @question = Question.find(params[:question_id])
     current_user = User.find(session[:user_id])
-    @answer = current_user.answers.create!(answer_params)
+    @answer = current_user.answers.build(answers_params)
+    @answer.question_id = @question.id
     if @answer.save
-      render json: { status: "success" }
+      render json: { status: "success", answer: @answer }
     else
       render json: { error: "Could not save answer" }
     end
@@ -44,6 +46,6 @@ class AnswersController < ApplicationController
   private
 
   def answers_params
-    params.require(:question).permit(:title)
+    params.require(:answer).permit(:title)
   end
 end

@@ -8,15 +8,14 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
-    @answers = Answer.where(question_id: @question.id)
-    render json: { question: @question, answers: @answers }
+    render json: { question: @question, answers: @question.answers }
   end
 
   def create
     current_user = User.find(session[:user_id])
-    @question = current_user.questions.create!(questions_params)
+    @question = current_user.questions.build(questions_params)
     if @question.save
-      render json: { status: "success" }
+      render json: { status: "success", question: @question }
     else
       render json: { status: "error create the post" }
     end
@@ -36,6 +35,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    @question = Question.find(params[:id])
     if @question.destroy
       render json: { status: "success" }
     else
