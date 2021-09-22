@@ -1,5 +1,3 @@
-require "faker"
-
 # Users
 User.create!(
   email: "example@hekani.org.zw",
