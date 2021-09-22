@@ -38,6 +38,7 @@ group :development do
   gem "web-console", ">= 4.1.0"
   gem "sqlite3", "~> 1.4"
   gem "rexml", "~> 3.2", ">= 3.2.5"
+  gem "faker", "~> 1.6", ">= 1.6.6"
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem "rack-mini-profiler", "~> 2.0"
