@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  include CurrentUserConcern
+  before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -7,7 +7,6 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
     render json: { question: @question, answers: @question.answers }
   end
 
@@ -26,7 +25,6 @@ class QuestionsController < ApplicationController
 
   # edit the question
   def update
-    @question = Question.find(params[:id])
     if @question.update(questions_params)
       render json: { status: "success" }
     else
@@ -35,7 +33,6 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question = Question.find(params[:id])
     if @question.destroy
       render json: { status: "success" }
     else
@@ -44,6 +41,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def set_question
+    @question = Question.find(params[:id])
+  end
 
   def questions_params
     params.require(:question).permit(:title)

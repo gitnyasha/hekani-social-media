@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :comments
   has_many :articles, dependent: :destroy
   has_many :replies
+  has_many :votes
+  has_many :likes
   has_secure_password
 
   validates_presence_of :email
