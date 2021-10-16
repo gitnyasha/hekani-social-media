@@ -2,8 +2,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
 
   def index
-    @question = Question.find(params[:question_id])
-    @answers = @question.answers
+    @answers = Answer.all
     render json: @answers
   end
 
