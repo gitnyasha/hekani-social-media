@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
 
   def index
     @answers = Answer.all
-    render json: { answers: @answers }
+    render json: @answers.each { |a| a.title }
   end
 
   def show
