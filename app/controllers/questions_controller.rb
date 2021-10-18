@@ -2,8 +2,12 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   def index
+    @allquestions = []
     @questions = Question.all
-    render json: @questions
+    @questions.each do |question|
+      @allquestions << { id: question.id, question: question.title, date: question.created_at, answers: question.answers.count }
+    end
+    render json: @allquestions
   end
 
   def show

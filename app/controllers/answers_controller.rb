@@ -3,11 +3,17 @@ class AnswersController < ApplicationController
 
   def index
     @answers = Answer.all
-    render json: @answers.each { |a| a.title }
+    @allanswers = []
+    @answers.each do |answer|
+      @question = answer.question = Question.find(answer.question_id)
+      @user = answer.user = User.find(answer.user_id)
+      @allanswers.push({ id: answer.id, question: @question.title, answer: answer.title, created: answer.created_at, author: @user.email, comments: answer.comments.count, votes: answer.votes.count })
+    end
+    render json: @allanswers
   end
 
   def show
-    render json: { question: @answer.question.title, answer: @answer.title, created: @answer.created_at, author: @answer.user.email, comments: @answer.comments, votes: @answer.votes.count }
+    render json: { id: @answer.id, question: @answer.question.title, answer: @answer.title, created: @answer.created_at, author: @answer.user.email, comments: @answer.comments, votes: @answer.votes.count }
   end
 
   def create
