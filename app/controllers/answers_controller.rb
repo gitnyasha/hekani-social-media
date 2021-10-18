@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
   end
 
   def show
-    render json: { answer: @answer, comments: @answer.comments, votes: @answer.votes.count }
+    render json: { question: @answer.question.title, answer: @answer.title, created: @answer.created_at, author: @answer.user.email, comments: @answer.comments, votes: @answer.votes.count }
   end
 
   def create
