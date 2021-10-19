@@ -2,7 +2,12 @@ class RepliesController < ApplicationController
   def index
     @article = Article.find(params[:article_id])
     @replies = @article.replies
-    render json: @replies
+    @allreplies = []
+    @replies.each do |reply|
+      reply.user = User.find(reply.user_id)
+      @allreplies << { id: reply.id, user: reply.user.email, reply: reply.title, created: reply.created_at }
+    end
+    render json: @allreplies
   end
 
   def show

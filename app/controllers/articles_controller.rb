@@ -7,7 +7,12 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    render json: { article: @article, replies: @article.replies, likes: @article.likes.count }
+    @replys = []
+    @article.replies.each do |reply|
+      @user = User.find(reply.user_id)
+      @replys.push({ id: reply.id, user: @user.email, reply: reply.title, created: reply.created_at })
+    end
+    render json: { article: @article, replies: @replys, likes: @article.likes.count }
   end
 
   def create

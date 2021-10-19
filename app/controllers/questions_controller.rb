@@ -11,7 +11,12 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    render json: { question: @question, answers: @question.answers }
+    @answer = []
+    @question.answers.each do |answer|
+      answer.user = User.find(answer.user_id)
+      @answer.push({ id: answer.id, user: answer.user.email, answer: answer.title, created: answer.created_at })
+    end
+    render json: { question: @question, answers: @answer }
   end
 
   def create
