@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
 
   def index
-    @answers = Answer.all
+    @answers = Answer.all.order(created_at: :desc)
     @allanswers = []
     @answers.each do |answer|
       @question = answer.question = Question.find(answer.question_id)

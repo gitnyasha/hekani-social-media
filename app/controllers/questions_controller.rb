@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
 
   def index
     @allquestions = []
-    @questions = Question.all
+    @questions = Question.all.order(created_at: :desc)
     @questions.each do |question|
       @allquestions << { id: question.id, question: question.title, date: question.created_at, answers: question.answers.count }
     end
