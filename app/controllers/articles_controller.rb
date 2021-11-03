@@ -3,22 +3,6 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all.order(created_at: :desc)
-    @myarticles = []
-
-    @articles.each do |article|
-      url = article.link
-      doc = Nokogiri::HTML(URI.open(url).read)
-      @myarticles << {
-        id: article.id,
-        title: doc.css(".entry-title").text,
-        image: doc.css("img").attr("src") ? doc.css("img.wp-post-image").attr("src").value : doc.css("img.wp-post-image").attr("src"),
-        link: url,
-        category: article.title,
-        created: article.created_at,
-      }
-    end
-
-    render json: @myarticles
   end
 
   def show
@@ -30,13 +14,25 @@ class ArticlesController < ApplicationController
     render json: { article: @article, replies: @replys, likes: @article.likes.count }
   end
 
+  def new
+    @article = Article.new
+    @url = params[:search]
+    if @url
+      @myarticles = []
+      doc = Nokogiri::HTML(URI.open(@url).read)
+      @title = doc.css(".entry-title").text
+      @image = doc.css("img").attr("src") ? doc.css("img.wp-post-image").attr("src").value : doc.css("img.wp-post-image").attr("src")
+      @link = @url
+    end
+  end
+
   def create
-    current_user = User.find(session[:user_id])
+    current_user = User.find(1)
     @article = current_user.articles.build(articles_params)
     if @article.save
       render json: { status: "success", article: @article }
     else
-      render json: { status: "error create the post" }
+      render json: { status: "Error creating post" }
     end
   end
 
@@ -48,7 +44,7 @@ class ArticlesController < ApplicationController
     if @article.update(articles_params)
       render json: { status: "success", article: @article }
     else
-      render json: { status: "error update the post" }
+      render json: { status: "Error updating the post" }
     end
   end
 
@@ -56,7 +52,7 @@ class ArticlesController < ApplicationController
     if @article.destroy
       render json: { status: "success" }
     else
-      render json: { status: "error destroy the post" }
+      render json: { status: "Error destroying the post" }
     end
   end
 

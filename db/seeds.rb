@@ -24,11 +24,11 @@ following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
 
 # articles
-users = User.all
-5.times do
-  title = "Tech"
-  users.each { |user|
-    user.articles.create!(title: title, link: "https://zimtechdaily.co.zw/buy-the-galanz-retro-bottom-mount-refrigerator-for-689-99-on-amazon/")
-    user.questions.create!(title: title)
-  }
-end
+# users = User.all
+# 5.times do
+#   title = "Tech"
+#   users.each { |user|
+#     user.articles.create!(title: title, link: "https://zimtechdaily.co.zw/buy-the-galanz-retro-bottom-mount-refrigerator-for-689-99-on-amazon/")
+#     user.questions.create!(title: title)
+#   }
+# end
