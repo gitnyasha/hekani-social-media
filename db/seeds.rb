@@ -1,12 +1,12 @@
 # Users
 User.create!(
-  email: "example@hekani.org.zw",
+  email: "user@hekani.org.zw",
   password: "123456",
   password_confirmation: "123456",
 )
 
 9.times do |n|
-  email = "example-#{n + 1}@hekani.org.zw"
+  email = "user#{n + 1}@hekani.org.zw"
   password = "password"
   User.create!(
     email: email,
@@ -26,9 +26,9 @@ followers.each { |follower| follower.follow(user) }
 # articles
 users = User.all
 5.times do
-  title = "This my title"
+  title = "Tech"
   users.each { |user|
-    user.articles.create!(title: title, link: "http://localhost:3001")
+    user.articles.create!(title: title, link: "https://zimtechdaily.co.zw/buy-the-galanz-retro-bottom-mount-refrigerator-for-689-99-on-amazon/")
     user.questions.create!(title: title)
   }
 end
