@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    @articles = @user.articles
+    @articles = @user.articles.order(created_at: :desc)
     @following = @user.following
     @followers = @user.followers
-    render json: { user: @user, articles: @articles, following: @following, followers: @followers }
   end
 
   def following

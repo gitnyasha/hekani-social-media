@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <% @articles.each do |article| %>
+      <div class="col-md-10 col-lg-4 mt-4">
+        <div class="card">
+          <div class="card-body">
+            <%= link_to article.link do %>
+              <%= image_tag article.image, class: "img-responsive" %>
+              <p class="card-text bg-primary">
+                <%= article.title %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

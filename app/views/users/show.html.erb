@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3 col-sm-12">
+      <ul class="list-group">
+        <li class="list-group-item bg-light">Information: </li>
+        <li class="list-group-item border">
+          <%= @user.name %>
+        </li>
+        <li class="list-group-item border">
+          Following: <%= @following.count %>
+        </li>
+        <li class="list-group-item border">
+          Followers: <%= @followers.count %>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-9 col-sm-12">
+      <div class="row">
+        <% @articles.each do |article| %>
+          <div class="col-md-10 col-lg-4 mt-4">
+            <div class="card">
+              <div class="card-body">
+                <%= link_to article.link do %>
+                  <%= image_tag article.image, class: "img-responsive" %>
+                  <p class="card-text bg-primary">
+                    <%= article.title %>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
