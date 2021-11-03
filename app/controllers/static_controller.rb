@@ -1,5 +1,4 @@
 class StaticController < ApplicationController
-  def home
-    render json: { status: "Ok" }
+  def index
   end
 end

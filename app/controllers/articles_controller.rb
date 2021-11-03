@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    current_user = User.find(1)
+    current_user = User.find(session[:user_id])
     @article = current_user.articles.build(articles_params)
     if @article.save
       render json: { status: "success", article: @article }
