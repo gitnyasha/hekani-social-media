@@ -2,8 +2,22 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
-    @articles = Article.all.order(created_at: :desc)
-    render json: @articles
+    @articles = Article.all
+    @myarticles = []
+
+    @articles.each do |article|
+      url = article.link
+      html = URI.open(url).read
+      doc = Nokogiri::HTML(html)
+      @myarticles << {
+        title: doc.css(".entry-title").text,
+        image: doc.css("img").attr("src") ? doc.css("img.wp-post-image").attr("src").value : doc.css("img.wp-post-image").attr("src"),
+        link: doc.css("a").attr("href").value,
+        category: article.title,
+      }
+    end
+
+    render json: @myarticles
   end
 
   def show
