@@ -7,13 +7,14 @@ class ArticlesController < ApplicationController
 
     @articles.each do |article|
       url = article.link
-      html = URI.open(url).read
-      doc = Nokogiri::HTML(html)
+      doc = Nokogiri::HTML(URI.open(url).read)
       @myarticles << {
+        id: article.id,
         title: doc.css(".entry-title").text,
         image: doc.css("img").attr("src") ? doc.css("img.wp-post-image").attr("src").value : doc.css("img.wp-post-image").attr("src"),
-        link: doc.css("a").attr("href").value,
+        link: url,
         category: article.title,
+        created: article.created_at,
       }
     end
 
