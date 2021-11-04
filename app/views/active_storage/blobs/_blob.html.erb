@@ -1,0 +1,27 @@
+<%
+  figure_class = [
+      "attachment",
+      "attachment--#{blob.representable? ? 'preview' : 'file'}",
+      "attachment--#{blob.filename.extension}",
+  ].join(" ")
+  resize_limit = local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]
+  blob_representation = blob.representation(resize_to_limit: resize_limit )
+%>
+<figure class=<%=figure_class%>>
+  <% if blob.representable? %>
+    <%= image_tag blob_representation %>
+  <% end %>
+
+  <figcaption class="attachment__caption">
+    <!-- <% if caption = blob.try(:caption) %>
+      <%= caption %>
+    <% else %>
+      <span class="attachment__name"><%= blob.filename %></span>
+    <% end %>
+    | -->
+    <%
+      # This is the line we added.
+      # Everything else is was already present when the file was created during action text setup
+    %>
+  </figcaption>
+</figure>
