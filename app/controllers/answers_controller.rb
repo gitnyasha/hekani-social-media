@@ -11,15 +11,14 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @question = Question.find(params[:question_id])
     current_user = User.find(session[:user_id])
     @answer = current_user.answers.build(answers_params)
-    @answer.question_id = @question.id
+    @answer.question_id = params[:question_id]
     if @answer.save
       redirect_to @answer
-      flash.now[:danger] = "Answers created!"
+      flash.now[:success] = "Answer created!"
     else
-      render json: { error: "Could not save answer" }
+      flash.now[:error] = "Error creating answer"
     end
   end
 

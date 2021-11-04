@@ -16,5 +16,11 @@
         <li><%= link_to "Log out", logout_path, method: :delete, class: "nav-link"  %></li>
       <% end %>
     </ul>
+    <% if @current_user %>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Ask Question
+      </button>
+    <% end %>
   </div>
 </nav>
+<%= render "questions/form" %>

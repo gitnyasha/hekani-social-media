@@ -23,10 +23,11 @@ gem "jbuilder", "~> 2.7"
 gem "bcrypt", "~> 3.1.7"
 gem "rack-cors", "~> 1.1", ">= 1.1.1", :require => "rack/cors"
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem "image_processing", "~> 1.2"
 gem "open-uri"
 gem "htmlbeautifier"
-
+#gem mini_magick
+gem "mini_magick", "~> 4.11"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
 

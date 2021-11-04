@@ -2,30 +2,22 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   def index
-    @allquestions = []
     @questions = Question.all.order(created_at: :desc)
-    @questions.each do |question|
-      @allquestions << { id: question.id, question: question.title, date: question.created_at, answers: question.answers.count }
-    end
-    render json: @allquestions
   end
 
   def show
-    @answer = []
-    @question.answers.each do |answer|
-      answer.user = User.find(answer.user_id)
-      @answer.push({ id: answer.id, user: answer.user.email, answer: answer.title, created: answer.created_at })
-    end
-    render json: { question: @question, answers: @answer }
+    @question = Question.find(params[:id])
+    @answers = @question.answers.order(created_at: :desc)
   end
 
   def create
     current_user = User.find(session[:user_id])
     @question = current_user.questions.build(questions_params)
     if @question.save
-      render json: { status: "success", question: @question }
+      redirect_to @question
+      flash[:success] = "Question created!"
     else
-      render json: { status: "error create the post" }
+      flash[:error] = "Error creating question"
     end
   end
 
