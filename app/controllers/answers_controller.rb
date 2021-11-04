@@ -3,22 +3,11 @@ class AnswersController < ApplicationController
 
   def index
     @answers = Answer.all.order(created_at: :desc)
-    @allanswers = []
-    @answers.each do |answer|
-      @question = answer.question = Question.find(answer.question_id)
-      @user = answer.user = User.find(answer.user_id)
-      @allanswers.push({ id: answer.id, question: @question.title, answer: answer.title, created: answer.created_at, author: @user.email, comments: answer.comments.count, votes: answer.votes.count })
-    end
-    render json: @allanswers
+    @users = User.all
   end
 
   def show
-    @comment = []
-    @answer.comments.each do |comment|
-      comment.user = User.find(comment.user_id)
-      @comment.push({ id: comment.id, user: comment.user.email, comment: comment.title, created: comment.created_at })
-    end
-    render json: { id: @answer.id, question: @answer.question.title, answer: @answer.title, created: @answer.created_at, author: @answer.user.email, votes: @answer.votes.count, comments: @comment }
+    @answer = Answer.find(params[:id])
   end
 
   def create
@@ -27,7 +16,8 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answers_params)
     @answer.question_id = @question.id
     if @answer.save
-      render json: { status: "success", answer: @answer }
+      redirect_to @answer
+      flash.now[:danger] = "Answers created!"
     else
       render json: { error: "Could not save answer" }
     end

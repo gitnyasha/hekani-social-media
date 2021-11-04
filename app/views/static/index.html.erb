@@ -4,7 +4,7 @@
       <div class="col-md-10 col-lg-4 mt-4">
         <div class="card">
           <div class="card-body">
-            <%= link_to article.link do %>
+            <%= link_to article.link, target: "_blank" do %>
               <%= image_tag article.image, class: "img-responsive" %>
               <p class="card-text bg-primary">
                 <%= article.title %>

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
-
+  # delete votes
   resources :sessions, only: [:create]
   resources :questions do
     resources :answers do
@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resources :comments
     resources :votes, only: [:create, :destroy]
   end
+
+  resources :votes, only: [:destroy]
 
   resources :users do
     member do
