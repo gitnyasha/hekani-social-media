@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
     @comment.answer_id = @answer.id
     if @comment.save
       redirect_to @answer
+      flash.now[:danger] = "You commented successfully"
     else
       flash.now[:danger] = "error"
     end

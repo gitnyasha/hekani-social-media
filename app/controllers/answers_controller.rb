@@ -16,7 +16,8 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answers_params)
     @answer.question_id = @question.id
     if @answer.save
-      render json: { status: "success", answer: @answer }
+      redirect_to @answer
+      flash.now[:danger] = "Answers created!"
     else
       render json: { error: "Could not save answer" }
     end

@@ -128,23 +128,35 @@
                 </div>
               </div>
               <div class="card-body">
-                <p class="mb-3 tx-14"><strong><%= answer.question.title %>?</strong></p>
+                <p class="mb-3 tx-14">
+                  <%= link_to answer do %>
+                    <strong><%= answer.question.title %>?</strong>
+                  <% end %>
+                </p>
                 <p class="mb-3 tx-14"><%= answer.title %></p>
               </div>
               <div class="card-footer">
                 <div class="d-flex post-actions">
-                  <a href="javascript:;" class="d-flex align-items-center text-muted mr-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart icon-md">
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg>
-                    <p class="d-none d-md-block ml-2">Like <%= answer.votes.count %></p>
-                  </a>
-                  <a href="javascript:;" class="d-flex align-items-center text-muted mr-4">
+                  <% if answer.voted_by?(@current_user) %>
+                    <%= button_to answer_votes_path(answer), method: "post", disabled: true, class: "btn btn-outline-secondary" do %>
+                      <i class="fa fa-thumbs-o-up"></i>
+                    <% end %>
+                    <%= button_to vote_path(answer.votes.find_by(user_id: @current_user.id)), method: :delete, class: "btn btn-outline-danger m-1" do %>
+                      <i class="fa fa-thumbs-o-down"></i>
+                    <% end %>
+                  <% else %>
+                    <%= button_to answer_votes_path(answer), method: "post", class: "btn btn-outline-success" do %>
+                      <i class="fa fa-thumbs-o-up"></i>
+                    <% end %>
+                  <% end %>
+                  <p class="d-none d-md-block ml-2">Votes <%= answer.votes.count %></p>
+
+                  <%= link_to answer, class:"d-flex align-items-center text-muted mr-4" do %>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square icon-md">
                       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
                     <p class="d-none d-md-block ml-2">Comment <%= answer.comments.count %></p>
-                  </a>
+                  <% end %>
                   <a href="javascript:;" class="d-flex align-items-center text-muted">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share icon-md">
                       <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
