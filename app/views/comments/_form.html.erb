@@ -1,0 +1,6 @@
+<%= form_for ([@answer, @answer.comments.build]) do |f| %>
+  <div class="form-group">
+    <%= f.text_field :title , class: "form-control mb-10", rows: "5", placeholder: "Enter message" %>
+  </div>
+  <%= f.submit :Submit, value: "Comment", class: "primary-btn text-uppercase" %>
+<% end %>

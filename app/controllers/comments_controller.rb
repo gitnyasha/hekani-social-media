@@ -10,16 +10,15 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(comments_params)
     @comment.answer_id = @answer.id
     if @comment.save
-      render json: { status: "success", comment: @comment }
+      redirect_to @answer
     else
-      render json: { status: "error commenting" }
+      flash.now[:danger] = "error"
     end
   end
 
   def destroy
     @comment = @answer.comments.find(params[:id])
     current_user = User.find(session[:user_id])
-
     if @comment.user_id == current_user.id
       @comment.destroy
     else
