@@ -28,6 +28,9 @@ gem "open-uri"
 gem "htmlbeautifier"
 #gem mini_magick
 gem "mini_magick", "~> 4.11"
+gem "coderay", "~> 1.1", ">= 1.1.2"
+gem "redcarpet", "~> 3.5"
+gem "will_paginate"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
 

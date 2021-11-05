@@ -4,20 +4,20 @@ class UsersController < ApplicationController
     @articles = @user.articles.order(created_at: :desc)
     @following = @user.following
     @followers = @user.followers
+    @users = User.all
+    @answers = @user.answers.order(created_at: :desc)
   end
 
   def following
     @title = "Following"
     @user = User.find(params[:id])
     @users = @user.following
-    render json: @users
   end
 
   def followers
     @title = "Followers"
     @user = User.find(params[:id])
     @users = @user.followers
-    render json: @users
   end
 
   def new
