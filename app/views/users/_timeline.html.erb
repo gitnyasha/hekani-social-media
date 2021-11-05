@@ -8,7 +8,7 @@
               <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
               <div class="ml-2">
                 <p><%= article.user.name %></p>
-                <p class="tx-11 text-muted"><%= article.created_at %> </p>
+                <p class="tx-11 text-muted"><%= time_ago_in_words(article.created_at) %> ago</p>
               </div>
             </div>
           </div>
