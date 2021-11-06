@@ -1,0 +1,7 @@
+<%= form_for(@answer) do |form| %>
+  <div class="form-group">
+    <%= form.label "Content" %>
+    <%= form.rich_text_area :title, value: @answer.title %>
+  </div>
+  <%= form.button :submit, class: "btn btn-primary"  %>
+<% end %>

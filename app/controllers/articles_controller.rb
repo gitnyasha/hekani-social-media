@@ -42,15 +42,15 @@ class ArticlesController < ApplicationController
   # edit the article
   def update
     if @article.update(articles_params)
-      render json: { status: "success", article: @article }
+      redirect_to @article
     else
-      render json: { status: "Error updating the post" }
+      render edit
     end
   end
 
   def destroy
     if @article.destroy
-      render json: { status: "success" }
+      redirect_to articles_path
     else
       render json: { status: "Error destroying the post" }
     end

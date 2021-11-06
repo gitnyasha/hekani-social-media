@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user
 
   def index
     @answers = Answer.all.order(created_at: :desc)
@@ -16,9 +17,9 @@ class AnswersController < ApplicationController
     @answer.question_id = params[:question_id]
     if @answer.save
       redirect_to @answer
-      flash.now[:success] = "Answer created!"
+      flash[:success] = "Answer created!"
     else
-      flash.now[:error] = "Error creating answer"
+      flash[:error] = "Error creating answer"
     end
   end
 
@@ -26,18 +27,20 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.update(answer_params)
-      render json: { status: "success" }
+    if @answer.update(answers_params)
+      flash[:success] = "Answer updated!"
+      redirect_to @answer
     else
-      render json: { status: "error update the post" }
+      flash[:error] = "Error updating answer"
     end
   end
 
   def destroy
     if @answer.destroy
-      render json: { status: "success" }
+      flash.now[:success] = "Answer deleted!"
+      redirect_to answers_path
     else
-      render json: { status: "error destroy the post" }
+      flash[:error] = "Error destroying answer"
     end
   end
 

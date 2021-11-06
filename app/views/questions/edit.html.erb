@@ -1,0 +1,11 @@
+ <%= form_for(@question) do |form| %>
+  <div class="modal-body">
+    <div class="form-group">
+      <%= form.label :title %>
+      <%= form.text_area :title, class: "form-control", value: @question.title %>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <%= form.button :submit, class: "btn btn-primary"  %>
+  </div>
+<% end %>

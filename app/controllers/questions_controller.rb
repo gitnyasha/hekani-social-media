@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all.order(created_at: :desc)
+    @users = User.all
   end
 
   def show
@@ -27,17 +28,20 @@ class QuestionsController < ApplicationController
   # edit the question
   def update
     if @question.update(questions_params)
-      render json: { status: "success" }
+      redirect_to @question
+      flash[:success] = "Question updated!"
     else
-      render json: { status: "error update the post" }
+      redirect_to @question
+      flash[:error] = "Error updating question"
     end
   end
 
   def destroy
     if @question.destroy
-      render json: { status: "success" }
+      redirect_to questions_path
+      flash[:success] = "Question deleted!"
     else
-      render json: { status: "error destroy the post" }
+      flash[:error] = "Error destroying question"
     end
   end
 

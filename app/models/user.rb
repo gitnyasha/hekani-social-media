@@ -1,11 +1,11 @@
 class User < ApplicationRecord
-  has_many :questions, dependent: :destroy
+  has_many :questions
   has_many :answers, dependent: :destroy
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :articles, dependent: :destroy
-  has_many :replies
-  has_many :votes
-  has_many :likes
+  has_many :replies, dependent: :destroy
+  has_many :votes, dependent: :destroy
+  has_many :likes, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
                                   dependent: :destroy
@@ -34,8 +34,8 @@ class User < ApplicationRecord
 
   # Returns a user's status feed.
   def feed
-    part_of_feed = "relationships.follower_id = :id or articles.user_id = :id"
-    Article.left_outer_joins(user: :followers)
+    part_of_feed = "relationships.follower_id = :id or answers.user_id = :id"
+    Answer.left_outer_joins(user: :followers)
       .where(part_of_feed, { id: id }).distinct
   end
 end
