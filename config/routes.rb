@@ -1,9 +1,25 @@
 Rails.application.routes.draw do
-  get 'question_categories/show'
+  get "question_categories/show"
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
-  # delete votes
+
+  resources :article_categories do
+    resources :articles do
+      resources :replies
+      resources :likes, only: [:create, :destroy]
+    end
+  end
+
+  resources :question_categories do
+    resources :questions do
+      resources :answers do
+        resources :comments
+        resources :votes, only: [:create, :destroy]
+      end
+    end
+  end
+
   resources :sessions, only: [:create]
   resources :questions do
     resources :answers do

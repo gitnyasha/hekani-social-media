@@ -1,34 +1,69 @@
 <div class="album py-5 bg-light">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <% @articles.each do |article| %>
-        <div class="col-lg-4 col-sm-12 mb-4">
-          <div class="card">
-            <%= link_to article.link, target: "_blank" do %><img src="<%= article.image %>" class="card-img-top" width="100%" height="225"><% end %>
-            <div class="card-body news-card">
-              <h6 class="card-title"><%= link_to article.link, target: "_blank" do %><%= truncate(strip_markdown(article.title), length: 66) %><% end %></h6>
-              <p class="card-text">
-                <small class="text-muted">
-                  <%= article.user.name ? article.user.name : article.user.email %> | 
-                  <%= article.created_at.strftime("%d %b %Y") %> | 
-                  Likes <%= article.likes.count %>
-                </small>
-                <% if @current_user %>
-                  <% if article.liked_by?(@current_user) %>
-                    <%= button_to like_path(article.likes.find_by(user_id: @current_user.id)), method: :delete, class: "btn btn-outline-danger m-1" do %>
-                      <i class="fa fa-thumbs-o-down"></i>
+      <div class="col-md-8 col-xl-9 middle-wrapper">
+        <div class="row">
+          <% @articles.each do |article| %>
+            <div class="col-lg-4 col-sm-12 mb-4">
+              <div class="card">
+                <%= link_to article.link, target: "_blank" do %><img src="<%= article.image %>" class="card-img-top" width="100%" height="225"><% end %>
+                <div class="card-body news-card">
+                  <h6 class="card-title"><%= link_to article.link, target: "_blank" do %><%= truncate(strip_markdown(article.title), length: 40) %><% end %></h6>
+                  <p class="card-text">
+                    <small class="text-muted">
+                      <%= article.user.name ? article.user.name : article.user.email %> | 
+                      <%= article.created_at.strftime("%d %b %Y") %> | 
+                      Likes <%= article.likes.count %>
+                    </small>
+                    <% if @current_user %>
+                      <% if article.liked_by?(@current_user) %>
+                        <%= button_to like_path(article.likes.find_by(user_id: @current_user.id)), method: :delete, class: "btn btn-outline-danger m-1" do %>
+                          <i class="fa fa-thumbs-o-down"></i>
+                        <% end %>
+                      <% else %>
+                        <%= button_to article_likes_path(article), method: "post", class: "btn btn-outline-success" do %>
+                          <i class="fa fa-thumbs-o-up"></i>
+                        <% end %>
+                      <% end %>
                     <% end %>
-                  <% else %>
-                    <%= button_to article_likes_path(article), method: "post", class: "btn btn-outline-success" do %>
-                      <i class="fa fa-thumbs-o-up"></i>
-                    <% end %>
-                  <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <!-- right wrapper start -->
+      <div class="d-none d-xl-block col-xl-3 right-wrapper">
+        <div class="row">
+          <div class="col-md-12 grid-margin">
+            <div class="card rounded">
+              <div class="card-body">
+                <h6 class="card-title">Categories</h6>
+                <% @categories.each do |category| %>
+                  <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                    <div class="d-flex align-items-center hover-pointer">
+                      <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                      <div class="ml-2">
+                        <p><%= category.name %></p>
+                      </div>
+                    </div>
+                    <button class="btn btn-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                      </svg>
+                    </button>
+                  </div>
                 <% end %>
-              </p>
+              </div>
             </div>
           </div>
         </div>
-      <% end %>
+      </div>
+      <!-- right wrapper end -->
     </div>
   </div>
 </div>

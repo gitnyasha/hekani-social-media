@@ -42,21 +42,23 @@
               </div>
               <div class="card-footer">
                 <div class="d-flex post-actions">
-                  <% if @answer.voted_by?(@current_user) %>
-                    <%= button_to answer_votes_path(@answer), method: "post", disabled: true, class: "btn btn-outline-secondary" do %>
-                      <i class="fa fa-thumbs-o-up"></i>
+                  <% if @current_user %>
+                    <% if @answer.voted_by?(@current_user) %>
+                      <%= button_to answer_votes_path(@answer), method: "post", disabled: true, class: "btn btn-outline-secondary" do %>
+                        <i class="fa fa-thumbs-o-up"></i>
+                      <% end %>
+                      <%= button_to vote_path(@answer.votes.find_by(user_id: @current_user.id)), method: :delete, class: "btn btn-outline-danger m-1" do %>
+                        <i class="fa fa-thumbs-o-down"></i>
+                      <% end %>
+                    <% else %>
+                      <%= button_to answer_votes_path(@answer), method: "post", class: "btn btn-outline-success" do %>
+                        <i class="fa fa-thumbs-o-up"></i>
+                      <% end %>
                     <% end %>
-                    <%= button_to vote_path(@answer.votes.find_by(user_id: @current_user.id)), method: :delete, class: "btn btn-outline-danger m-1" do %>
-                      <i class="fa fa-thumbs-o-down"></i>
-                    <% end %>
-                  <% else %>
-                    <%= button_to answer_votes_path(@answer), method: "post", class: "btn btn-outline-success" do %>
-                      <i class="fa fa-thumbs-o-up"></i>
-                    <% end %>
+                    <p class="pt-2 pl-2">Votes <span class="ml-1"><%= @answer.votes.count %></span></p>
+                    <!-- Comment form -->
+                    <%= render "comments/form" %>
                   <% end %>
-                  <p class="pt-2 pl-2">Votes <span class="ml-1"><%= @answer.votes.count %></span></p>
-                  <!-- Comment form -->
-                  <%= render "comments/form" %>
                 </div>
               </div>
             </div>

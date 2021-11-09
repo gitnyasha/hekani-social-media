@@ -3,6 +3,7 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all.order(created_at: :desc)
+    @categories = ArticleCategory.all
   end
 
   def show
@@ -62,6 +63,6 @@ class ArticlesController < ApplicationController
   end
 
   def articles_params
-    params.require(:article).permit(:title, :link, :image)
+    params.require(:article).permit(:title, :link, :image, :article_category_id)
   end
 end
