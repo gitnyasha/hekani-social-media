@@ -1,1 +1,16 @@
-
+  <% @user.followers.each do |follower|%>
+  <div class="col-md-12 grid-margin">
+    <div class="card rounded">
+      <div class="card-header">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+            <div class="ml-2">
+              <p><%= follower.name %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

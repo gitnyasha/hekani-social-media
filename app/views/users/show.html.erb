@@ -83,11 +83,19 @@
       </div>
       <!-- left wrapper end -->
       <!-- middle wrapper start -->
-      <div class="col-md-8 col-xl-6 middle-wrapper" id="myTabContent">
-        <%= render "users/timeline"%>
-        <% render "users/following"%>
-        <% render "users/followers"%>
-        <% render "users/answers"%>
+      <div class="col-md-8 col-xl-6 middle-wrapper tab-content" id="myTabContent">
+        <div class="row tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
+          <%= render "users/timeline"%>
+        </div>
+        <div class="row tab-pane fade" id="following" role="tabpanel" aria-labelledby="following-tab">
+          <% render "users/following"%>
+        </div>
+        <div class="row tab-pane fade" id="followers" role="tabpanel" aria-labelledby="followers-tab">
+          <% render "users/followers"%>
+        </div>
+        <div class="row tab-pane fade" id="answers" role="tabpanel" aria-labelledby="answers-tab">
+          <% render "users/answers"%>
+        </div>
       </div>
       <!-- middle wrapper end -->
       <!-- right wrapper start -->

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_04_191955) do
+ActiveRecord::Schema.define(version: 2021_11_09_074613) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -58,6 +58,12 @@ ActiveRecord::Schema.define(version: 2021_11_04_191955) do
     t.integer "user_id"
   end
 
+  create_table "article_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.string "link"
@@ -65,6 +71,7 @@ ActiveRecord::Schema.define(version: 2021_11_04_191955) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
     t.string "image"
+    t.integer "article_category_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -84,11 +91,18 @@ ActiveRecord::Schema.define(version: 2021_11_04_191955) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "question_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.integer "question_category_id"
   end
 
   create_table "relationships", force: :cascade do |t|
