@@ -6,24 +6,23 @@ class CommentsController < ApplicationController
 
   def create
     @answer = Answer.find(params[:answer_id])
-    current_user = User.find(session[:user_id])
-    @comment = current_user.comments.build(comments_params)
+    @comment = @current_user.comments.build(comments_params)
     @comment.answer_id = @answer.id
     if @comment.save
       redirect_to @answer
-      flash.now[:danger] = "You commented successfully"
+      flash.now[:success] = "You commented successfully"
     else
-      flash.now[:danger] = "error"
+      flash.now[:error] = "error"
     end
   end
 
   def destroy
-    @comment = @answer.comments.find(params[:id])
-    current_user = User.find(session[:user_id])
-    if @comment.user_id == current_user.id
+    @comment = Comment.find(params[:id])
+    if @comment.user_id == @current_user.id
       @comment.destroy
+      flash.now[:success] = "You destroyed comment successfully"
     else
-      render json: { errors: { comment: ["not owned by user"] } }, status: :forbidden
+      flash.now[:error] = "error"
     end
   end
 

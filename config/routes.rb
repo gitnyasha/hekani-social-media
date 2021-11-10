@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :question_categories do
     resources :questions do
       resources :answers do
-        resources :comments
+        resources :comments, only: [:create, :destroy]
         resources :votes, only: [:create, :destroy]
       end
     end
@@ -23,17 +23,18 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create]
   resources :questions do
     resources :answers do
-      resources :comments
+      resources :comments, only: [:create, :destroy]
       resources :votes, only: [:create, :destroy]
     end
   end
 
   resources :answers do
-    resources :comments
+    resources :comments, only: [:create, :destroy]
     resources :votes, only: [:create, :destroy]
   end
 
   resources :votes, only: [:destroy]
+  resources :comments, only: [:destroy]
 
   resources :users do
     member do

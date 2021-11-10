@@ -74,7 +74,17 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div class="d-flex align-items-center">
                     <div class="ml-2">
-                      <p><%= comment.user.name if comment.user %></p>
+                      <% if @current_user.id == comment.user_id %>
+                        <%= form_with(model: @current_user.comments.find_by(id: comment.id),
+             html: { method: :delete }, local: true) do |f| %>
+                          <%= f.hidden_field :answer_id, value: comment.answer_id %>
+                          <%= button_tag type: 'submit', class: "btn text-danger btn-icon", title: "UnFollow" do %>
+                            Delete
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                      <p><%= comment.user.name if comment.user %>
+                      </p>
                       <p class="tx-11 text-muted"><%= time_ago_in_words(comment.created_at) if comment.created_at? %> ago</p>
                     </div>
                   </div>

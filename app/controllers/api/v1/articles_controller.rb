@@ -4,7 +4,12 @@ module Api
       before_action :set_article, only: [:show]
 
       def index
-        @articles = Article.all.order(created_at: :desc)
+        current_user = User.find(session[:user_id])
+        if current_user
+          @articles = Article.where(article_category_id: current_user.articles_subscribed).order(created_at: :desc)
+        else
+          @articles = Article.all.order(created_at: :desc)
+        end
         render json: @articles
       end
 

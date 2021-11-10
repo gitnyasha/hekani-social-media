@@ -18,8 +18,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    current_user = User.find(session[:user_id])
-    @question = current_user.questions.build(questions_params)
+    @question = @current_user.questions.build(questions_params)
     if @question.save
       redirect_to @question
       flash[:success] = "Question created!"
