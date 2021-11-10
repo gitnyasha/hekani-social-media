@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
 
   def index
     @answers = Answer.all.order(created_at: :desc)
-    @users = User.all
+    @categories = QuestionCategory.all.order(created_at: :desc)
   end
 
   def show

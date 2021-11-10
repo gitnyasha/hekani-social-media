@@ -3,7 +3,11 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @questions = Question.all.order(created_at: :desc)
+    if @current_user
+      @questions = Question.where(question_category_id: @current_user.questions_subscribed).order(created_at: :desc)
+    else
+      @questions = Question.all.order(created_at: :desc)
+    end
     @categories = QuestionCategory.all
   end
 

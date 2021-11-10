@@ -12,7 +12,7 @@
                   <div class="d-flex align-items-center hover-pointer">
                     <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
                     <div class="ml-2">
-                      <p><%= category.name %></p>
+                      <p><%= link_to category.name, category %></p>
                     </div>
                   </div>
                   <% if @current_user.subscribed_to_question?(category) %>
