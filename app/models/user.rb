@@ -37,12 +37,36 @@ class User < ApplicationRecord
     following << other_user unless self == other_user
   end
 
+  def follow_articles(article_category)
+    articles_subscribed << article_category unless self == article_category
+  end
+
+  def follow_questions(question_category)
+    questions_subscribed << question_category unless self == question_category
+  end
+
   def unfollow(other_user)
     following.delete(other_user)
   end
 
+  def unsubscribe_article(article_category)
+    articles_subscribed.delete(article_category)
+  end
+
+  def unsubscribe_question(question_category)
+    questions_subscribed.delete(question_category)
+  end
+
   def following?(other_user)
     following.include?(other_user)
+  end
+
+  def subscribed_to_article?(article_category)
+    articles_subscribed.include?(article_category)
+  end
+
+  def subscribed_to_question?(question_category)
+    questions_subscribed.include?(question_category)
   end
 
   # Returns a user's status feed.

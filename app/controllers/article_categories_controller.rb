@@ -3,10 +3,11 @@ class ArticleCategoriesController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @categories = ArticleCategories.all
+    @categories = ArticleCategory.all
   end
 
   def show
+    @categories = ArticleCategory.all
   end
 
   def new
