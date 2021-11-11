@@ -7,7 +7,11 @@
             <div class="gray-shade"></div>
             <div class="cover-body d-flex justify-content-between align-items-center">
               <div>
-                <img class="profile-pic" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="profile">
+                <% if @user.image? %>
+                  <%= image_tag @user.image_url, class: "img-responsive", height: "60", alt: "profile pic" %>
+                <% else %>
+                  <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                <% end %>
                 <span class="profile-name"><%= @user.name %></span>
               </div>
               <div class="d-none d-md-block">
@@ -16,11 +20,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit btn-icon-prepend">
                       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                    </svg> Edit profile
-                  <% end %>
-                  <%= button_to user_path(@user), method: :delete, class: "btn btn-danger btn-icon-text btn-edit-profile" do %>
-                    <i class="fa fa-trash"></i>
-                    <span class="">Deactivate Account</span>
+                    </svg> Settings
                   <% end %>
                 <% end %>
               </div>
@@ -62,26 +62,11 @@
       </div>
     </div>
     <div class="row profile-body">
-      <!-- left wrapper start -->
       <div class="d-none d-md-block col-md-4 col-xl-3 left-wrapper">
         <div class="card rounded">
-          <div class="card-body">
-            <div class="mt-3">
-              <label class="tx-11 font-weight-bold mb-0 text-uppercase">Name:</label>
-              <p class="text-muted"><%= @user.name ? @user.name : @user.email %></p>
-            </div>
-            <div class="mt-3">
-              <label class="tx-11 font-weight-bold mb-0 text-uppercase">Email:</label>
-              <p class="text-muted"><%= @user.email %></p>
-            </div>
-            <div class="mt-3">
-              <label class="tx-11 font-weight-bold mb-0 text-uppercase">Website:</label>
-              <p class="text-muted">marshallchikari.co.zw</p>
-            </div>
-          </div>
+          <%= render "users/info" %>
         </div>
       </div>
-      <!-- left wrapper end -->
       <!-- middle wrapper start -->
       <div class="col-md-8 col-xl-6 middle-wrapper tab-content" id="myTabContent">
         <div class="row tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
@@ -104,14 +89,17 @@
           <div class="col-md-12 grid-margin">
             <div class="card rounded">
               <div class="card-body">
-                <h6 class="card-title">suggestions for you</h6>
+                <h6 class="card-title">Follow Users</h6>
                 <% @users.each do |user|%>
                   <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
                     <div class="d-flex align-items-center hover-pointer">
-                      <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                      <% if user.image? %>
+                        <%= image_tag user.image_url, class: "img-responsive", height: "50", alt: "profile pic" %>
+                      <% else %>
+                        <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                      <% end %>
                       <div class="ml-2">
                         <p><%= link_to user do %><%= user.name ? user.name : user.email %><% end %></p>
-                        <p class="tx-11 text-muted">12 Mutual Friends</p>
                       </div>
                     </div>
                     <div id="follow_form">

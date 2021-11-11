@@ -4,7 +4,11 @@
       <div class="card-header">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
-            <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+            <% if answer.user.image? %>
+              <%= image_tag answer.user.image_url, class: "img-responsive", height: "60", alt: "profile pic" %>
+            <% else %>
+              <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+            <% end %>
             <div class="ml-2">
               <p><%= answer.user.name %></p>
               <p class="tx-11 text-muted"><%= time_ago_in_words(answer.created_at) %> ago</p>
@@ -12,10 +16,12 @@
           </div>
         </div>
       </div>
-      <div class="card-body">
-        <p class="mb-3 tx-14"><%= answer.question.title if answer.question %></p>
-        <p class="mb-3 tx-14"><%= answer.title %></p>
-      </div>
+      <%= link_to answer do %>
+        <div class="card-body text-dark">
+          <p class="mb-3 tx-14"><strong><%= answer.question.title if answer.question %>?</strong></p>
+          <p class="mb-3 tx-14"><%= answer.title %></p>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>

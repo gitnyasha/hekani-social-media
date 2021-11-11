@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include CurrentUserConcern
 
   before_action :set_user, only: [:edit, :destroy, :update, :show]
-  before_action :authenticate_user, except: [:new]
+  before_action :authenticate_user, except: [:new, :edit]
 
   def show
     @user = User.find(params[:id])
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    if @user.update(user_profile)
       redirect_to @user
       flash[:success] = "User updated!"
     else
@@ -70,5 +70,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def user_profile
+    params.require(:user).permit(:name, :email, :image, :bio, :birth)
   end
 end

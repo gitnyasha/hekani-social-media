@@ -6,36 +6,6 @@
         <div class="col-md-12 grid-margin">
           <div class="card rounded">
             <div class="card-header">
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center">
-                  <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
-                  <div class="ml-2">
-                    <p><%= @question.user.name ? @question.user.name : @question.user.email %></p>
-                    <p class="tx-11 text-muted"><%= time_ago_in_words(@question.created_at) %> ago </p>
-                  </div>
-                </div>
-                <div class="dropdown">
-                  <button class="btn p-0" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg pb-3px">
-                      <circle cx="12" cy="12" r="1"></circle>
-                      <circle cx="19" cy="12" r="1"></circle>
-                      <circle cx="5" cy="12" r="1"></circle>
-                    </svg>
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                    <%= link_to edit_question_path(@question), class: "dropdown-item d-flex align-items-center" do %>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-right-up icon-sm mr-2">
-                        <polyline points="10 9 15 4 20 9"></polyline>
-                        <path d="M4 20h7a4 4 0 0 0 4-4V4"></path>
-                      </svg> <span class="">Edit</span>
-                    <% end %>
-                    <%= button_to question_path(@question), method: :delete, class: "dropdown-item d-flex align-items-center" do %>
-                      <i class="fa fa-trash"></i>
-                      <span class="">Delete</span>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
               <div class="card-body">
                 <p class="mb-3 tx-14"><strong><%= @question.title %>?</strong></p>
                 <p class="pt-2 pl-2">Answers <span class="ml-1"><%= @question.answers.count %></span></p>
@@ -61,7 +31,7 @@
                   <div class="d-flex align-items-center">
                     <div class="ml-2">
                       <p><%= answer.user.name if answer.user %></p>
-                      <p class="tx-11 text-muted"><%= answer.created_at %></p>
+                      <p class="tx-11 text-muted"><%= time_ago_in_words(answer.created_at) %> ago</p>
                     </div>
                   </div>
                 </div>

@@ -3,7 +3,8 @@ class AnswersController < ApplicationController
   before_action :authenticate_user, except: [:show]
 
   def index
-    @answers = Answer.all.order(created_at: :desc)
+    @questions = Question.where(question_category_id: @current_user.questions_subscribed).order(created_at: :desc)
+    @answers = Answer.where(question_id: @questions).order(created_at: :desc)
     @categories = QuestionCategory.all.order(created_at: :desc)
   end
 
