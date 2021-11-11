@@ -4,13 +4,20 @@ module Api
       before_action :set_article, only: [:show]
 
       def index
+        @art = []
         current_user = User.find(session[:user_id])
         if current_user
           @articles = Article.where(article_category_id: current_user.articles_subscribed).order(created_at: :desc)
+          @articles.each do |article|
+            @user = User.find(article.user_id)
+            @category = ArticleCategory.find(article.article_category_id)
+            @art.push({ id: article.id, title: article.title, publisher: @user.name, image: article.image, date: article.created_at, category: @category.name })
+          end
+          render json: @art
         else
           @articles = Article.all.order(created_at: :desc)
+          render json: @articles
         end
-        render json: @articles
       end
 
       def show

@@ -58,6 +58,21 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+      resources :article_categories do
+        resources :articles do
+          resources :replies
+          resources :likes, only: [:create, :destroy]
+        end
+      end
+
+      resources :question_categories do
+        resources :questions do
+          resources :answers do
+            resources :comments, only: [:create, :destroy]
+            resources :votes, only: [:create, :destroy]
+          end
+        end
+      end
       resources :sessions, only: [:create]
       resources :questions do
         resources :answers do

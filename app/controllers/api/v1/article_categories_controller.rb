@@ -4,14 +4,15 @@ module Api
       before_action :set_article_category, only: [:show]
 
       def index
-        @article_categories = ArticleCategories.all.order(created_at: :desc)
+        @articles_categories = ArticleCategory.all.order(created_at: :desc)
         render json: @articles_categories
       end
 
       def show
         @articles = []
-        @article_category.articles.each do |category|
-          @articles.push({ id: category.id, category: category.name })
+        @article_category.articles.each do |article|
+          @user = User.find(article.user_id)
+          @articles.push({ id: article.id, title: article.title, publisher: @user.name, image: article.image, date: article.created_at })
         end
         render json: { category: @article_category, articles: @articles }
       end

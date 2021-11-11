@@ -1,40 +1,45 @@
-<% @category.questions.each do |question|%>
+<% @answers.each do |answer|%>
   <div class="col-md-12 grid-margin">
     <div class="card rounded">
       <div class="card-header">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
-            <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+            <% if answer.user.image? %>
+              <%= image_tag answer.user.image_url, class: "img-responsive", height: "60", alt: "profile pic" %>
+            <% else %>
+              <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+            <% end %>
             <div class="ml-2">
-              <p><%= question.user.name ? question.user.name : question.user.email %></p>
-              <p class="tx-11 text-muted"><%= time_ago_in_words(question.created_at) %> ago </p>
+              <p><%= answer.user.name ? answer.user.name : answer.user.email %></p>
+              <p class="tx-11 text-muted"><%= time_ago_in_words(answer.created_at) %> ago </p>
             </div>
           </div>
         </div>
       </div>
       <div class="card-body">
         <p class="mb-3 tx-14">
-          <%= link_to question do %>
-            <strong><%= question.title %>?</strong>
+          <%= link_to answer do %>
+            <strong><%= answer.question.title if answer.question %>?</strong>
           <% end %>
         </p>
+        <p class="mb-3 tx-14"><%= answer.title.to_plain_text.truncate(60) %></p>
       </div>
       <div class="card-footer">
         <div class="d-flex post-actions">
-          <%= link_to question, class:"d-flex align-items-center text-muted mr-4" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square icon-md">
+          <p class="d-none d-md-block ml-2">
+            <% if answer.voted_by?(@current_user) %>
+              <%= button_to vote_path(answer.votes.find_by(user_id: @current_user.id)), method: :delete, class: "btn-outline-danger mr-1" do %>
+                <i class="fa fa-thumbs-o-down"></i>
+              <% end %>
+            <% else %>
+              <%= button_to answer_votes_path(answer), method: "post", class: "btn-outline-success mr-1" do %>
+                <i class="fa fa-thumbs-o-up"></i>
+              <% end %>
+            <% end %>
+            Votes <%= answer.votes.count %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-2 feather feather-message-square icon-md">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-            <p class="d-none d-md-block ml-2">Answers <%= question.answers.count %></p>
-          <% end %>
-          <a href="javascript:;" class="d-flex align-items-center text-muted">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share icon-md">
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-              <polyline points="16 6 12 2 8 6"></polyline>
-              <line x1="12" y1="2" x2="12" y2="15"></line>
-            </svg>
-            <p class="d-none d-md-block ml-2">Share</p>
-          </a>
+            </svg> Comments <%= answer.comments.count %></p>
         </div>
       </div>
     </div>

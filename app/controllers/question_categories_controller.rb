@@ -7,6 +7,8 @@ class QuestionCategoriesController < ApplicationController
   end
 
   def show
+    @questions = Question.where(question_category_id: @category.id).order(created_at: :desc)
+    @answers = Answer.where(question_id: @questions).order(created_at: :desc)
     @categories = QuestionCategory.all
   end
 

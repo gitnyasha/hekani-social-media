@@ -4,16 +4,27 @@ module Api
       before_action :set_question_category, except: [:index]
 
       def index
-        @question_categories = QuestionCategories.all.order(created_at: :desc)
-        render json: @questions_categories
+        @categories = QuestionCategory.all.order(created_at: :desc)
+        render json: @categories
       end
 
       def show
         @questions = []
-        @question_category.questions.each do |category|
-          @questions.push({ id: category.id, category: category.name })
+        @allanswers = []
+
+        @que = Question.where(question_category_id: @category.id).order(created_at: :desc)
+        @answers = Answer.where(question_id: @que).order(created_at: :desc)
+
+        @answers.each do |answer|
+          @question = answer.question = Question.find(answer.question_id)
+          @user = answer.user = User.find(answer.user_id)
+          @allanswers.push({ id: answer.id, question: @question.title, answer: answer.title, created: answer.created_at, author: @user.email, comments: answer.comments.count, votes: answer.votes.count })
         end
-        render json: { category: @question_category, questions: @questions }
+
+        @category.questions.each do |question|
+          @questions.push({ id: question.id, question: question.title, date: question.created_at, answers: question.answers.count })
+        end
+        render json: { category: @category, questions: @questions, posts: @allanswers }
       end
 
       def create
