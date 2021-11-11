@@ -4,9 +4,29 @@
       <div class="card-header">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center">
-            <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+            <% if follower.image? %>
+              <%= image_tag follower.image_url, class: "img-responsive", height: "50", alt: "profile pic" %>
+            <% else %>
+              <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+            <% end %>
             <div class="ml-2">
-              <p><%= follower.name %></p>
+              <p><%= link_to follower do %><%= follower.name ? follower.name : follower.email %><% end %></p>
+            </div>
+            <div id="follow_form">
+              <% if @current_user.following?(follower) %>
+                <%= form_with(model: @current_user.active_relationships.find_by(followed_id: follower.id), html: { method: :delete }, local: true) do |f| %>
+                  <%= button_tag type: 'submit', class: "btn text-danger btn-icon", title: "UnFollow" do %>
+                    unfollow
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= form_with(model: @current_user.active_relationships.build, local: true) do |f| %>
+                  <div><%= hidden_field_tag :followed_id, follower.id %></div>
+                  <%= button_tag type: 'submit', class: "btn btn-icon text-success", title: "Follow" do %>
+                    follow
+                  <% end %>
+                <% end %>
+              <% end %>
             </div>
           </div>
         </div>

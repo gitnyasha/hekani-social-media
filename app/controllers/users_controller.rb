@@ -9,18 +9,18 @@ class UsersController < ApplicationController
     @articles = @user.articles.order(created_at: :desc)
     @following = @user.following
     @followers = @user.followers
-    @users = User.all
+    @users = User.order("RANDOM()").limit(5)
     @answers = @user.answers.order(created_at: :desc)
+    @article_categories = ArticleCategory.all.order(created_at: :desc)
+    @question_categories = QuestionCategory.all.order(created_at: :desc)
   end
 
   def following
-    @title = "Following"
     @user = User.find(params[:id])
     @users = @user.following
   end
 
   def followers
-    @title = "Followers"
     @user = User.find(params[:id])
     @users = @user.followers
   end

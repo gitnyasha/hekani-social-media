@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user, except: [:show]
 
+  #get answers from topics followed(question categories)
   def index
     @questions = Question.where(question_category_id: @current_user.questions_subscribed).order(created_at: :desc)
     @answers = Answer.where(question_id: @questions).order(created_at: :desc)
@@ -10,6 +11,7 @@ class AnswersController < ApplicationController
 
   def show
     @answer = Answer.find(params[:id])
+    @categories = QuestionCategory.all.order(created_at: :desc)
   end
 
   def create

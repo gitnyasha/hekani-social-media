@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     @answers = @question.answers.order(created_at: :desc)
-    @categories = QuestionCategory.all
+    @categories = QuestionCategory.all.order(created_at: :desc)
   end
 
   def create

@@ -13,6 +13,23 @@
                   <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
                 <% end %>
                 <span class="profile-name"><%= @user.name %></span>
+                <% if @current_user != @user %>
+                  <% if @current_user.following?(@user) %>
+                    <%= form_with(model: @current_user.active_relationships.find_by(followed_id: @user.id),
+             html: { method: :delete }, local: true) do |f| %>
+                      <%= button_tag type: 'submit', class: "btn text-danger btn-icon", title: "UnFollow" do %>
+                        unfollow
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <%= form_with(model: @current_user.active_relationships.build, local: true) do |f| %>
+                      <div><%= hidden_field_tag :followed_id, @user.id %></div>
+                      <%= button_tag type: 'submit', class: "btn btn-icon text-success", title: "Follow" do %>
+                        follow
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
               </div>
               <div class="d-none d-md-block">
                 <% if @current_user.id == @user.id %>
@@ -27,19 +44,19 @@
             </div>
           </div>
           <div class="header-links">
-            <ul class="links d-flex align-items-center mt-3 mt-md-0" id="myTab" role="tablist">
+            <ul class="links d-flex align-items-center mt-3 mt-md-0 nav nav-tabs" id="nav-tab" role="tablist">
               <li class="header-link-item d-flex align-items-center active" role="presentation">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns mr-1 icon-md">
                   <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path>
                 </svg>
-                <a class="pt-1px d-none d-md-block active" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="true">Timeline</a>
+                <a class="pt-1px d-none d-md-block active" id="nav-timeline-tab" data-toggle="tab" href="#nav-timeline" role="tab" aria-controls="nav-timeline" aria-selected="true">Timeline</a>
               </li>
               <li class="header-link-item ml-3 pl-3 border-left d-flex align-items-center" role="presentation">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-1 icon-md">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <a class="pt-1px d-none d-md-block" id="following-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following" aria-selected="false">Following <span class="text-muted tx-12"><%= @following.count %></span></a>
+                <a class="pt-1px d-none d-md-block" id="nav-following-tab" data-toggle="tab" href="#nav-following" role="tab" aria-controls="nav-following" aria-selected="false">Following <span class="text-muted tx-12"><%= @following.count %></span></a>
               </li>
               <li class="header-link-item ml-3 pl-3 border-left d-flex align-items-center" role="presentation">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users mr-1 icon-md">
@@ -48,13 +65,13 @@
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                   <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
-                <a class="pt-1px d-none d-md-block" id="followers-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="followers" aria-selected="false">Followers <span class="text-muted tx-12"><%= @followers.count %></span></a>
+                <a class="pt-1px d-none d-md-block" id="nav-followers-tab" data-toggle="tab" href="#nav-followers" role="tab" aria-controls="nav-followers" aria-selected="false">Followers <span class="text-muted tx-12"><%= @followers.count %></span></a>
               </li>
               <li class="header-link-item ml-3 pl-3 border-left d-flex align-items-center" role="presentation">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns mr-1 icon-md">
                   <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path>
                 </svg>
-                <a class="pt-1px d-none d-md-block" id="answers-tab" data-toggle="tab" href="#answers" role="tab" aria-controls="answers" aria-selected="false">Answers <span class="text-muted tx-12"><%= @user.answers.count %></span></a>
+                <a class="pt-1px d-none d-md-block" id="nav-answers-tab" data-toggle="tab" href="#nav-answers" role="tab" aria-controls="nav-answers" aria-selected="false">Answers <span class="text-muted tx-12"><%= @user.answers.count %></span></a>
               </li>
             </ul>
           </div>
@@ -68,64 +85,29 @@
         </div>
       </div>
       <!-- middle wrapper start -->
-      <div class="col-md-8 col-xl-6 middle-wrapper tab-content" id="myTabContent">
-        <div class="row tab-pane fade show active" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
-          <%= render "users/timeline"%>
-        </div>
-        <div class="row tab-pane fade" id="following" role="tabpanel" aria-labelledby="following-tab">
-          <% render "users/following"%>
-        </div>
-        <div class="row tab-pane fade" id="followers" role="tabpanel" aria-labelledby="followers-tab">
-          <% render "users/followers"%>
-        </div>
-        <div class="row tab-pane fade" id="answers" role="tabpanel" aria-labelledby="answers-tab">
-          <% render "users/answers"%>
+      <div class="col-md-8 col-xl-6 middle-wrapper">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="row tab-pane fade show active" id="nav-timeline" role="tabpanel" aria-labelledby="nav-timeline-tab">
+            <h3>Posts</h3>
+            <%= render "users/timeline"%>
+          </div>
+          <div class="row tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="nav-following-tab">
+            <h3>Following</h3>
+            <%= render "users/following"%>
+          </div>
+          <div class="row tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
+            <h3>Followers</h3>
+            <%= render "users/followers"%>
+          </div>
+          <div class="row tab-pane fade" id="nav-answers" role="tabpanel" aria-labelledby="nav-answers-tab">
+            <h3>My Answers</h3>
+            <%= render "users/answers"%>
+          </div>
         </div>
       </div>
       <!-- middle wrapper end -->
       <!-- right wrapper start -->
-      <div class="d-none d-xl-block col-xl-3 right-wrapper">
-        <div class="row">
-          <div class="col-md-12 grid-margin">
-            <div class="card rounded">
-              <div class="card-body">
-                <h6 class="card-title">Follow Users</h6>
-                <% @users.each do |user|%>
-                  <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
-                    <div class="d-flex align-items-center hover-pointer">
-                      <% if user.image? %>
-                        <%= image_tag user.image_url, class: "img-responsive", height: "50", alt: "profile pic" %>
-                      <% else %>
-                        <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
-                      <% end %>
-                      <div class="ml-2">
-                        <p><%= link_to user do %><%= user.name ? user.name : user.email %><% end %></p>
-                      </div>
-                    </div>
-                    <div id="follow_form">
-                      <% if @current_user.following?(user) %>
-                        <%= form_with(model: @current_user.active_relationships.find_by(followed_id: user.id),
-             html: { method: :delete }, local: true) do |f| %>
-                          <%= button_tag type: 'submit', class: "btn text-danger btn-icon", title: "UnFollow" do %>
-                            unfollow
-                          <% end %>
-                        <% end %>
-                      <% else %>
-                        <%= form_with(model: @current_user.active_relationships.build, local: true) do |f| %>
-                          <div><%= hidden_field_tag :followed_id, user.id %></div>
-                          <%= button_tag type: 'submit', class: "btn btn-icon text-success", title: "Follow" do %>
-                            follow
-                          <% end %>
-                        <% end %>
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= render "users/right-wrapper" %>
       <!-- right wrapper end -->
     </div>
   </div>
