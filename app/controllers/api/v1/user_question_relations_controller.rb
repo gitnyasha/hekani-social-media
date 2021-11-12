@@ -1,6 +1,6 @@
 module Api
   module V1
-    class UserQuestionRelationshipsController < ApplicationController
+    class UserQuestionRelationsController < ApplicationController
       def create
         category = QuestionCategory.find(params[:followed_id])
         current_user = User.find(session[:user_id])
@@ -10,7 +10,7 @@ module Api
       end
 
       def destroy
-        relationship = UserQuestionRelationship.find(params[:id]).followed
+        relationship = UserQuestionRelation.find(params[:id]).followed
         current_user = User.find(session[:user_id])
         if current_user.unsubscribe_question(relationship)
           redirect_to relationship

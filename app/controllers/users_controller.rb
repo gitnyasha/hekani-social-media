@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include CurrentUserConcern
 
   before_action :set_user, only: [:edit, :destroy, :update, :show]
-  before_action :authenticate_user, except: [:new, :edit]
+  before_action :authenticate_user, except: [:new, :edit, :create, :update, :destroy]
 
   def show
     @user = User.find(params[:id])
@@ -36,8 +36,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      flash[:success] = "Thank you for signing up!"
       redirect_to @user
+      flash[:success] = "Thank you for signing up!"
     else
       render new
     end

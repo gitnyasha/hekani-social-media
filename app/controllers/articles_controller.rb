@@ -35,9 +35,11 @@ class ArticlesController < ApplicationController
     current_user = User.find(session[:user_id])
     @article = current_user.articles.build(articles_params)
     if @article.save
-      render json: { status: "success", article: @article }
+      redirect_to articles_path
+      flash[:success] = "Article created"
     else
-      render json: { status: "Error creating post" }
+      flash[:error] = "Error creating article"
+      render :new
     end
   end
 

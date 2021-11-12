@@ -51,7 +51,7 @@ Rails.application.routes.draw do
 
   resources :relationships, only: [:create, :destroy]
   resources :user_article_relationships, only: [:create, :destroy]
-  resources :user_question_relationships, only: [:create, :destroy]
+  resources :user_question_relations, only: [:create, :destroy]
   delete :logout, to: "sessions#logout"
   get :logged_in, to: "sessions#logged_in"
   root to: "static#index"
@@ -99,7 +99,7 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create]
       resources :relationships, only: [:create, :destroy]
       resources :user_article_relationships, only: [:create, :destroy]
-      resources :user_question_relationships, only: [:create, :destroy]
+      resources :user_question_relations, only: [:create, :destroy]
       delete :logout, to: "sessions#logout"
       get :logged_in, to: "sessions#logged_in"
       root to: "static#home"

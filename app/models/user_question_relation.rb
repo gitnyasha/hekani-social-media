@@ -1,4 +1,4 @@
-class UserQuestionRelationship < ApplicationRecord
+class UserQuestionRelation < ApplicationRecord
   belongs_to :follower, class_name: "User"
   belongs_to :followed, class_name: "QuestionCategory"
   validates :follower_id, presence: true

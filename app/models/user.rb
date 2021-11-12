@@ -24,7 +24,7 @@ class User < ApplicationRecord
   has_many :articles_subscribed, through: :articles_following, source: :followed
 
   #users following question categories
-  has_many :questions_following, class_name: "UserQuestionRelationship",
+  has_many :questions_following, class_name: "UserQuestionRelation",
                                  foreign_key: "follower_id",
                                  dependent: :destroy
   has_many :questions_subscribed, through: :questions_following, source: :followed
