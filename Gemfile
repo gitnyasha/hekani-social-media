@@ -33,6 +33,12 @@ gem "simple_form", "~> 5.0", ">= 5.0.2"
 gem "coderay", "~> 1.1", ">= 1.1.2"
 gem "redcarpet", "~> 3.5"
 gem "will_paginate"
+gem "friendly_id", "~> 5.2", ">= 5.2.5"
+gem "omniauth-facebook", "~> 5.0"
+gem "omniauth-github", "~> 1.3"
+gem "omniauth-twitter", "~> 1.4"
+gem "whenever", require: false
+gem "pagy", "~> 3.7"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
 
