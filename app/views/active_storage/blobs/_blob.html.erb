@@ -11,17 +11,4 @@
   <% if blob.representable? %>
     <%= image_tag blob_representation %>
   <% end %>
-
-  <figcaption class="attachment__caption">
-    <!-- <% if caption = blob.try(:caption) %>
-      <%= caption %>
-    <% else %>
-      <span class="attachment__name"><%= blob.filename %></span>
-    <% end %>
-    | -->
-    <%
-      # This is the line we added.
-      # Everything else is was already present when the file was created during action text setup
-    %>
-  </figcaption>
 </figure>

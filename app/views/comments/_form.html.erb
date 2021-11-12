@@ -1,6 +1,6 @@
-<%= form_for ([@answer, @answer.comments.build]), html: {class: "form-inline"} do |f| %>
-  <div class="col">
-    <%= f.text_field :title , class: "form-control", placeholder: "Add Comment", required: true %>
+<%= form_for ([@answer, @answer.comments.build]) do |f| %>
+  <div class="form-group comment-box">
+    <%= f.text_area :title , class: "form-control", placeholder: "Add Comment", required: true %>
   </div>
-  <%= f.submit :Submit, value: "Comment", class: "btn btn-secondary text-uppercase" %>
+  <%= f.submit :Submit, class: "btn btn-secondary text-uppercase" %>
 <% end %>

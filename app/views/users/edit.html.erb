@@ -1,22 +1,34 @@
-<h1>Edit User</h1>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_with(model: @user, local: true) do |f| %>
+<h1 class="py-3 text-center">Edit Profile</h1>
+<div class="row justify-center my-2">
+  <div class="col-md-3 col-md-offset-3 mx-auto">
+    <%= button_to user_path(@user), method: :delete, class: "btn btn-danger btn-icon-text btn-edit-profile" do %>
+      <i class="fa fa-trash"></i>
+      <span class="">Delete Account</span>
+    <% end %>
+  </div>
+  <div class="col-md-6 col-md-offset-3 mx-auto">
+    <%= simple_form_for @user, html: {multipart:  true} do |f| %>
       <%= render 'shared/error_messages' %>
-
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control', value: @user.email %>
-
-      <%= f.label :name %>
-      <%= f.text_field :name, class: 'form-control', value: @user.name %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-
+      <div class="form-group">
+        <%= f.label "Profile Picture" %>
+        <%= f.file_field :image, class: 'form-control', value: @user.image_url %>
+      </div>
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control', value: @user.name %>
+      </div>
+      <div class="form-group">
+        <%= f.label :birth %>
+        <%= f.date_field :birth, class: 'form-control', value: @user.birth %>
+      </div>
+      <div class="form-group">
+        <%= f.label :bio %>
+        <%= f.text_area :bio, class: 'form-control', value: @user.bio %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, class: 'form-control', value: @user.email %>
+      </div>
       <%= f.submit "Update", class: "btn btn-primary" %>
     <% end %>
   </div>

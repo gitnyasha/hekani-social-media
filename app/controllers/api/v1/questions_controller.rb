@@ -4,8 +4,9 @@ module Api
       before_action :set_question, only: [:show, :edit, :update, :destroy]
 
       def index
+        current_user = User.find(session[:user_id])
         @allquestions = []
-        @questions = Question.all.order(created_at: :desc)
+        @questions = Question.where(question_category_id: current_user.questions_subscribed).order(created_at: :desc)
         @questions.each do |question|
           @allquestions << { id: question.id, question: question.title, date: question.created_at, answers: question.answers.count }
         end

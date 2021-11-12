@@ -2,24 +2,25 @@ class UsersController < ApplicationController
   include CurrentUserConcern
 
   before_action :set_user, only: [:edit, :destroy, :update, :show]
+  before_action :authenticate_user, except: [:new, :edit]
 
   def show
     @user = User.find(params[:id])
     @articles = @user.articles.order(created_at: :desc)
     @following = @user.following
     @followers = @user.followers
-    @users = User.all
+    @users = User.order("RANDOM()").limit(5)
     @answers = @user.answers.order(created_at: :desc)
+    @article_categories = ArticleCategory.all.order(created_at: :desc)
+    @question_categories = QuestionCategory.all.order(created_at: :desc)
   end
 
   def following
-    @title = "Following"
     @user = User.find(params[:id])
     @users = @user.following
   end
 
   def followers
-    @title = "Followers"
     @user = User.find(params[:id])
     @users = @user.followers
   end
@@ -43,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    if @user.update(user_profile)
       redirect_to @user
       flash[:success] = "User updated!"
     else
@@ -69,5 +70,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def user_profile
+    params.require(:user).permit(:name, :email, :image, :bio, :birth)
   end
 end

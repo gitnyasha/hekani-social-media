@@ -1,0 +1,60 @@
+<div class="container">
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Posts</a>
+      <a class="nav-link" id="nav-questions-tab" data-toggle="tab" href="#nav-questions" role="tab" aria-controls="nav-questions" aria-selected="false">Questions</a>
+    </div>
+  </nav>
+  <div class="row profile-body">
+    <!-- middle wrapper start -->
+    <div class="col-md-8 col-xl-9 middle-wrapper">
+      <div class="tab-content" id="nav-tabContent">
+        <div class="row tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+          <%= render("question_categories/posts")%>
+        </div>
+        <div class="row tab-pane fade" id="nav-questions" role="tabpanel" aria-labelledby="nav-questions-tab">
+          <%= render("question_categories/questions")%>
+        </div>
+      </div>
+    </div>
+    <!-- middle wrapper end -->
+    <!-- right wrapper start -->
+    <div class="d-none d-xl-block col-xl-3 right-wrapper">
+      <div class="row">
+        <div class="col-md-12 grid-margin">
+          <div class="card rounded">
+            <div class="card-body">
+              <h6 class="card-title">Categories</h6>
+              <% @categories.each do |category| %>
+                <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                  <div class="d-flex align-items-center hover-pointer">
+                    <img class="img-xs rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                    <div class="ml-2">
+                      <p><%= link_to category.name, category %></p>
+                    </div>
+                  </div>
+                  <% if @current_user.subscribed_to_question?(category) %>
+                    <%= form_with(model: @current_user.questions_following.find_by(followed_id: category.id),
+             html: { method: :delete }, local: true) do |f| %>
+                      <%= button_tag type: 'submit', class: "btn text-danger btn-icon", title: "UnFollow" do %>
+                        unfollow
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <%= form_with(model: @current_user.questions_following.build, local: true) do |f| %>
+                      <div><%= hidden_field_tag :followed_id, category.id %></div>
+                      <%= button_tag type: 'submit', class: "btn btn-icon text-success", title: "Follow" do %>
+                        follow
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- right wrapper end -->
+  </div>
+</div>

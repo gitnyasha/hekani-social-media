@@ -2,7 +2,13 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
-    @articles = Article.all.order(created_at: :desc)
+    # select by articles by category user is following
+    if @current_user
+      @articles = Article.where(article_category_id: @current_user.articles_subscribed).order(created_at: :desc)
+    else
+      @articles = Article.all.order(created_at: :desc)
+    end
+    @categories = ArticleCategory.all
   end
 
   def show
@@ -62,6 +68,6 @@ class ArticlesController < ApplicationController
   end
 
   def articles_params
-    params.require(:article).permit(:title, :link, :image)
+    params.require(:article).permit(:title, :link, :image, :article_category_id)
   end
 end

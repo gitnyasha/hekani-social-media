@@ -15,6 +15,16 @@ module Api
           render json: { status: 500 }
         end
       end
+
+      def destroy
+        user = User.find(session[:user_id])
+        if user.destroy
+          reset_session
+          render json: { status: "Your account has been successfully destroyed" }
+        else
+          render json: { status: "Error deleting your account" }
+        end
+      end
     end
   end
 end

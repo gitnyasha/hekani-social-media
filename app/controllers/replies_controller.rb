@@ -21,9 +21,10 @@ class RepliesController < ApplicationController
     @reply = current_user.replies.build(replies_params)
     @reply.article_id = @article.id
     if @reply.save
-      render json: { status: "success", reply: @reply }
+      flash[:success] = "success"
+      redirect_to @article
     else
-      render json: { error: "Could not save reply" }
+      flash[:success] = "error"
     end
   end
 

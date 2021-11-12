@@ -5,15 +5,18 @@
       <div class="modal-content">
         <%= form_for(@current_user.questions.build) do |form| %>
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Ask Question</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <%= form.label :title %>
               <%= form.text_area :title, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "Categories" %>
+              <%= form.select :question_category_id, QuestionCategory.all.map {|question_category| [question_category.name, question_category.id] } %>
             </div>
           </div>
           <div class="modal-footer">
