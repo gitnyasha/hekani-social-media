@@ -59,7 +59,7 @@ module Api
       end
 
       def questions_params
-        params.require(:question).permit(:title)
+        params.require(:question).permit(:title, :question_category_id)
       end
     end
   end
