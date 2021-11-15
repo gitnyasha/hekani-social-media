@@ -9,7 +9,7 @@ module Api
         @answers.each do |answer|
           @question = answer.question = Question.find(answer.question_id)
           @user = answer.user = User.find(answer.user_id)
-          @allanswers.push({ id: answer.id, question: @question.title, answer: answer.title, created: time_ago_in_words(answer.created_at), author: @user.email, comments: answer.comments.count, votes: answer.votes.count })
+          @allanswers.push({ id: answer.id, question: @question.title, answer: answer.title, created: answer.created_at, author: @user.email, comments: answer.comments.count, votes: answer.votes.count })
         end
         render json: @allanswers
       end
@@ -18,9 +18,9 @@ module Api
         @comment = []
         @answer.comments.each do |comment|
           comment.user = User.find(comment.user_id)
-          @comment.push({ id: comment.id, user: comment.user.email, comment: comment.title, created: time_ago_in_words(comment.created_at) })
+          @comment.push({ id: comment.id, user: comment.user.email, comment: comment.title, created: comment.created_at })
         end
-        render json: { id: @answer.id, question: @answer.question.title, answer: @answer.title, created: time_ago_in_words(@answer.created_at), author: @answer.user.email, votes: @answer.votes.count, comments: @comment }
+        render json: { id: @answer.id, question: @answer.question.title, answer: @answer.title, created: @answer.created_at, author: @answer.user.email, votes: @answer.votes.count, comments: @comment }
       end
 
       def create
