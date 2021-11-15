@@ -11,7 +11,7 @@ module Api
           @articles.each do |article|
             @user = User.find(article.user_id)
             @category = ArticleCategory.find(article.article_category_id)
-            @art.push({ id: article.id, title: article.title, publisher: @user.name, image: article.image, date: article.created_at, category: @category.name })
+            @art.push({ id: article.id, title: article.title, publisher: @user.name, image: article.image, date: time_ago_in_words(article.created_at), category: @category.name })
           end
           render json: @art
         else
@@ -24,7 +24,7 @@ module Api
         @replys = []
         @article.replies.each do |reply|
           @user = User.find(reply.user_id)
-          @replys.push({ id: reply.id, user: @user.email, reply: reply.title, created: reply.created_at })
+          @replys.push({ id: reply.id, user: @user.email, reply: reply.title, created: time_ago_in_words(reply.created_at) })
         end
         render json: { article: @article, replies: @replys, likes: @article.likes.count }
       end
