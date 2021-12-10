@@ -4,9 +4,17 @@ module Api
       def show
         @user = User.find(session[:user_id])
         @articles = @user.articles
-        @following = @user.following.count
-        @followers = @user.followers.count
-        render json: { user: @user, articles: @articles, following: @following, followers: @followers, feed: @user.feed }
+        @following = @user.following
+        @followers = @user.followers
+
+        # user feed
+        @myfeed = []
+        @user.feed.each do |answer|
+          @question = answer.question = Question.find(answer.question_id)
+          @feeduser = User.find(answer.user_id)
+          @myfeed.push({ id: answer.id, question: @question.title, answer: answer.title, created: answer.created_at, author: @feeduser.email, comments: answer.comments.count, votes: answer.votes.count })
+        end
+        render json: { id: @user.id, name: @user.name, bio: @user.bio, email: @user.email, image: @user.image, birth: @user.birth, articles: @articles, following: @following, followers: @followers, feed: @myfeed }
       end
 
       def following
