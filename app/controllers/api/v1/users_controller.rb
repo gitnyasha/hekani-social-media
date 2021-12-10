@@ -4,8 +4,8 @@ module Api
       def show
         @user = User.find(session[:user_id])
         @articles = @user.articles
-        @following = @user.following
-        @followers = @user.followers
+        @following = @user.following.count
+        @followers = @user.followers.count
         render json: { user: @user, articles: @articles, following: @following, followers: @followers, feed: @user.feed }
       end
 
