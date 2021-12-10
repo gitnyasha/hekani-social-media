@@ -14,7 +14,7 @@ module Api
           @feeduser = User.find(answer.user_id)
           @myfeed.push({ id: answer.id, question: @question.title, answer: answer.title, created: answer.created_at, author: @feeduser.email, comments: answer.comments.count, votes: answer.votes.count })
         end
-        render json: { id: @user.id, name: @user.name, bio: @user.bio, email: @user.email, image: @user.image, birth: @user.birth, articles: @articles, following: @following, followers: @followers, feed: @myfeed }
+        render json: { id: @user.id, name: @user.name, bio: @user.bio, email: @user.email, image: @user.image, birth: @user.birth, articles: @articles, following: @following, followers: @followers, feed: @myfeed, number_of_feeds: @myfeed.count, number_of_following: @following.count, number_of_followers: @followers.count }
       end
 
       def following
