@@ -26,7 +26,6 @@ gem "rack-cors", "~> 1.1", ">= 1.1.1", :require => "rack/cors"
 gem "image_processing", "~> 1.2"
 gem "open-uri"
 gem "htmlbeautifier"
-#gem mini_magick
 gem "mini_magick", "~> 4.11"
 gem "carrierwave", "~> 2.1"
 gem "simple_form", "~> 5.0", ">= 5.0.2"
