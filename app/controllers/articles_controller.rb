@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
       @myarticles = []
       doc = Nokogiri::HTML(URI.open(@url).read)
       @title = doc.css(".entry-title").text
-      @image = doc.css("img").attr("src") ? doc.css("img.wp-post-image").attr("src").value : doc.css("img.wp-post-image").attr("src")
+      @image = doc.css(".tz-wp-tw-in-article-image").attr("src") ? doc.css(".tz-wp-tw-in-article-image").attr("src").value : doc.css(".tz-wp-tw-in-article-image").attr("src")
       @link = @url
     end
   end
