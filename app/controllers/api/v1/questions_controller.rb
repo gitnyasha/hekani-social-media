@@ -17,7 +17,7 @@ module Api
         @answer = []
         @question.answers.each do |answer|
           answer.user = User.find(answer.user_id)
-          @answer.push({ id: answer.id, question: @question.title, author: answer.user.name, bio: answer.user.bio, answer: answer.title, comments: answer.comments.count, votes: answer.votes.count, created: answer.created_at })
+          @answer.push({ id: answer.id, question: @question.title, author: answer.user.name, author_id: answer.user.id, bio: answer.user.bio, answer: answer.title, comments: answer.comments.count, votes: answer.votes.count, created: answer.created_at })
         end
         render json: { question: @question, answers: @answer }
       end
