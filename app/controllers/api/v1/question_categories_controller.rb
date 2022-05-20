@@ -1,7 +1,7 @@
 module Api
   module V1
     class QuestionCategoriesController < ApplicationController
-      before_action :set_question_category, except: [:index]
+      before_action :set_question_category, except: [:index, :create]
 
       def index
         @categories = QuestionCategory.all.order(created_at: :desc)
@@ -28,8 +28,8 @@ module Api
       end
 
       def create
-        @category = QuestionCategory.new(question_category_params)
-        if @category.save
+        category = QuestionCategory.new(question_category_params)
+        if category.save
           render json: { status: "Successfully created a Category" }
         else
           render json: { status: "Failed creating a Category" }
@@ -50,7 +50,7 @@ module Api
         @category = QuestionCategory.find(params[:id])
       end
 
-      def question_categories_params
+      def question_category_params
         params.require(:question_category).permit(:name)
       end
     end
