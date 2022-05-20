@@ -96,6 +96,7 @@ Rails.application.routes.draw do
         resources :replies
         resources :likes, only: [:create, :destroy]
       end
+      
       resources :registrations, only: [:create]
       resources :relationships, only: [:create, :destroy]
       resources :user_article_relationships, only: [:create, :destroy]
