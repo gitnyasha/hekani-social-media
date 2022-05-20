@@ -6,6 +6,8 @@ module Api
         current_user = User.find(session[:user_id])
         if current_user.follow_articles(category)
           render json: { status: "Success" }
+        else
+          render json: { status: "Error", message: "Something went wrong" }
         end
       end
 
@@ -14,16 +16,8 @@ module Api
         current_user = User.find(session[:user_id])
         if current_user.unsubscribe_article(relationship)
           render json: { status: "Success" }
-        end
-      end
-
-      def check_following
-        category = ArticleCategory.find(params[:followed_id])
-        current_user = User.find(session[:user_id])
-        if current_user.subscribed_to_article?(category)
-          render json: { status: "Success", message: "You are following #{category.name}" }
         else
-          render json: { status: "Error", message: "Not following" }
+          render json: { status: "Error", message: "Something went wrong" }
         end
       end
     end

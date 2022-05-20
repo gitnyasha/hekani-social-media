@@ -30,6 +30,36 @@ module Api
         @users = @user.followers
         render json: @users
       end
+
+      def does_user_follow_article
+        category = ArticleCategory.find(params[:followed_id])
+        current_user = User.find(session[:user_id])
+        if current_user.subscribed_to_article?(category)
+          render json: { status: "following", message: "You are following #{category.name}" }
+        else
+          render json: { status: "Error", message: "Not following" }
+        end
+      end
+
+      def does_user_follow_question
+        category = QuestionCategory.find(params[:followed_id])
+        current_user = User.find(session[:user_id])
+        if current_user.subscribed_to_question?(category)
+          render json: { status: "following", message: "You are following #{category.name}" }
+        else
+          render json: { status: "Error", message: "Not following" }
+        end
+      end
+
+      def does_user_follow_user
+        user = User.find(params[:followed_id])
+        current_user = User.find(session[:user_id])
+        if current_user.following?(user)
+          render json: { status: "following", message: "You are following #{user.name}" }
+        else
+          render json: { status: "Error", message: "Not following" }
+        end
+      end
     end
   end
 end

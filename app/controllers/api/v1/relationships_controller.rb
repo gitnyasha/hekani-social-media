@@ -19,18 +19,7 @@ module Api
         else
           render json: { status: "Error", message: "Something went wrong" }
         end
-      end
-
-      # check if user is following
-      def check_following
-        user = User.find(params[:followed_id])
-        current_user = User.find(session[:user_id])
-        if current_user.following?(user)
-          render json: { status: "Successfully following", message: "You are following #{user.name}" }
-        else
-          render json: { status: "Error", message: "Not following" }
-        end
-      end
+      end    
     end
   end
 end

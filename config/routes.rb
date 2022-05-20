@@ -98,23 +98,14 @@ Rails.application.routes.draw do
       end
       
       resources :registrations, only: [:create]
-      resources :relationships, only: [:create, :destroy] do
-        member do
-          get :check_following
-        end
-      end
-      resources :user_article_relationships, only: [:create, :destroy] do
-        member do
-          get :check_following
-        end
-      end
-      resources :user_question_relations, only: [:create, :destroy] do
-        member do
-          get :check_following
-        end
-      end
+      resources :relationships, only: [:create, :destroy]
+      resources :user_article_relationships, only: [:create, :destroy]
+      resources :user_question_relations, only: [:create, :destroy]
       delete :logout, to: "sessions#logout"
       get :logged_in, to: "sessions#logged_in"
+      get :does_user_follow_article, to: "users#does_user_follow_article"
+      get :does_user_follow_question, to: "users#does_user_follow_question"
+      get :does_user_follow_user, to: "users#does_user_follow_user"
       root to: "static#home"
     end
   end
