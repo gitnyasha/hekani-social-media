@@ -106,9 +106,9 @@ Rails.application.routes.draw do
       post '/follow_question', to: "user_question_relations#create"
       delete :logout, to: "sessions#logout"
       get :logged_in, to: "sessions#logged_in"
-      get '/does_user_follow_article/:id', to: "users#does_user_follow_article"
-      get '/does_user_follow_question/:id', to: "users#does_user_follow_question"
-      get '/does_user_follow_user/:id', to: "users#does_user_follow_user"
+      get '/does_user_follow_article', to: "users#does_user_follow_article"
+      get '/does_user_follow_question', to: "users#does_user_follow_question"
+      get '/does_user_follow_user', to: "users#does_user_follow_user"
       root to: "static#home"
     end
   end
