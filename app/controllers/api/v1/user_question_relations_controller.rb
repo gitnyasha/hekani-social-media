@@ -13,7 +13,7 @@ module Api
       end
 
       def destroy
-        relationship = UserQuestionRelation.find(params[:id]).followed
+        category = QuestionCategory.find(params[:followed_id])
         current_user = User.find(session[:user_id])
         if current_user.unsubscribe_question(relationship)
           render json: { status: "Successfully unfollowed", message: "You are no longer following #{relationship.name}" }

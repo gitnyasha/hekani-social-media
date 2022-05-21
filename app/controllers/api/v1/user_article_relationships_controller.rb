@@ -12,7 +12,7 @@ module Api
       end
 
       def destroy
-        relationship = UserArticleRelationship.find(params[:id]).followed
+        category = QuestionCategory.find(params[:followed_id])
         current_user = User.find(session[:user_id])
         if current_user.unsubscribe_article(relationship)
           render json: { status: "Success" }
