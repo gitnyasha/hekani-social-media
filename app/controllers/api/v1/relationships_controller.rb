@@ -12,7 +12,7 @@ module Api
       end
 
       def destroy
-        user = Relationship.find(params[:id]).followed
+        user = User.find(params[:followed_id])
         current_user = User.find(session[:user_id])
         if current_user.unfollow(user)
           render json: { status: "Successfully unfollowed", message: "You are no longer following #{user.name}" }
