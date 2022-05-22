@@ -8,7 +8,7 @@ module Api
         @allanswers = []
         @answers.each do |answer|
           @question = answer.question = Question.find(answer.question_id)
-          @user = answer.user = User.find(answer.user_id)
+          @user = User.find(answer.user_id)
           current_user = User.find(session[:user_id])
           if current_user.following?(@user)
             relationship = "unfollow"
