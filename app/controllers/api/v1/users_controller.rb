@@ -37,7 +37,7 @@ module Api
         if current_user.subscribed_to_article?(category)
           render json: { status: "following", message: "You are following #{category.name}" }
         else
-          render json: { status: "Error", message: "Not following" }
+          render json: { status: "notfollowing", message: "Not following" }
         end
       end
 
@@ -47,7 +47,7 @@ module Api
         if current_user.subscribed_to_question?(category)
           render json: { status: "following", message: "You are following #{category.name}" }
         else
-          render json: { status: "Error", message: "Not following" }
+          render json: { status: "notfollowing", message: "Not following" }
         end
       end
 
@@ -57,7 +57,7 @@ module Api
         if current_user.following?(user)
           render json: { status: "following", message: "You are following #{user.name}" }
         else
-          render json: { status: "Error", message: "Not following" }
+          render json: { status: "notfollowing", message: "Not following" }
         end
       end
     end
