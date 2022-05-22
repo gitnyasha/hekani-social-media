@@ -83,13 +83,13 @@
               </div>
               <% if @current_user %>
                 <div id="follow_form">
-                  <% if @current_user.subscribed_to_article?(qcategory) %>
-                    <%= form_with(model: @current_user.articles_following.find_by(followed_id: qcategory.id),
+                  <% if @current_user.subscribed_to_question?(qcategory) %>
+                    <%= form_with(model: @current_user.questions_following.find_by(followed_id: qcategory.id),
              html: { method: :delete }, local: false) do |f| %>
                       <%= render "articles/unfollow"%>
                     <% end %>
                   <% else %>
-                    <%= form_with(model: @current_user.articles_following.build, local: false) do |f| %>
+                    <%= form_with(model: @current_user.questions_following.build, local: false) do |f| %>
                       <div><%= hidden_field_tag :followed_id, qcategory.id %></div>
                       <%= render "articles/follow"%>
                     <% end %>

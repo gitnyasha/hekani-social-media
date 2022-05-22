@@ -4,8 +4,16 @@ module Api
       before_action :set_question_category, except: [:index, :create]
 
       def index
-        @categories = QuestionCategory.all.order(created_at: :desc)
-        render json: @categories
+        categories = []
+        QuestionCategory.all.each do |category|
+        if @current_user.subscribed_to_question?(category)
+          relationship = "unfollow"
+        else
+          relationship = "follow"
+        end
+          categories.push({ id: category.id, name: category.name, relationship: relationship })
+        end
+        render json: categories
       end
 
       def show

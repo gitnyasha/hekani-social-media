@@ -4,8 +4,16 @@ module Api
       before_action :set_article_category, only: [:show]
 
       def index
-        @articles_categories = ArticleCategory.all.order(created_at: :desc)
-        render json: @articles_categories
+        categories = []
+        ArticleCategory.all.each do |category|
+        if @current_user.subscribed_to_article?(category)
+          relationship = "unfollow"
+        else
+          relationship = "follow"
+        end
+          categories.push({ id: category.id, name: category.name, relationship: relationship })
+        end
+        render json: categories
       end
 
       def show
