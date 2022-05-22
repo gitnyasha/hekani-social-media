@@ -9,7 +9,13 @@ module Api
         @answers.each do |answer|
           @question = answer.question = Question.find(answer.question_id)
           @user = answer.user = User.find(answer.user_id)
-          @allanswers.push({ id: answer.id, question: @question.title, answer: answer.title, created: answer.created_at, author: @user.name, author_id: @user.id, bio: @user.bio, comments: answer.comments.count, votes: answer.votes.count })
+          current_user = User.find(session[:user_id])
+          if current_user.following?(@user)
+            relationship = "unfollow"
+          else
+            relationship = "follow"
+          end
+          @allanswers.push({ id: answer.id, question: @question.title, answer: answer.title, created: answer.created_at, author: @user.name, author_id: @user.id, bio: @user.bio, comments: answer.comments.count, votes: answer.votes.count, relationship: relationship })
         end
         render json: @allanswers
       end
