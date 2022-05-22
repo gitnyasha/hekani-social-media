@@ -6,7 +6,7 @@ module Api
         current_user = User.find(session[:user_id])
         if current_user.follow_questions(category)
           #render json
-          render json: { status: "Successfully following", message: "You are now following #{category.name}" }
+          render json: { status: "Success", message: "You are now following #{category.name}" }
         else
           render json: { status: "Error", message: "Something went wrong" }
         end
@@ -15,8 +15,8 @@ module Api
       def destroy
         category = QuestionCategory.find(params[:followed_id])
         current_user = User.find(session[:user_id])
-        if current_user.unsubscribe_question(relationship)
-          render json: { status: "Successfully unfollowed", message: "You are no longer following #{relationship.name}" }
+        if current_user.unsubscribe_question(category)
+          render json: { status: "Success", message: "You are no longer following #{relationship.name}" }
         else
           render json: { status: "Error", message: "Something went wrong" }
         end

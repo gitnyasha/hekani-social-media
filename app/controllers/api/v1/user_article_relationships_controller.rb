@@ -14,7 +14,7 @@ module Api
       def destroy
         category = QuestionCategory.find(params[:followed_id])
         current_user = User.find(session[:user_id])
-        if current_user.unsubscribe_article(relationship)
+        if current_user.unsubscribe_article(category)
           render json: { status: "Success" }
         else
           render json: { status: "Error", message: "Something went wrong" }
