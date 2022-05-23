@@ -15,9 +15,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-    current_user = User.find(session[:user_id])
-    @answer = current_user.answers.build(answers_params)
-    @answer.question_id = params[:question_id]
+    @answer = @current_user.answers.build(answers_params)
     if @answer.save
       redirect_to @answer
       flash[:success] = "Answer created!"
@@ -54,6 +52,6 @@ class AnswersController < ApplicationController
   end
 
   def answers_params
-    params.require(:answer).permit(:title)
+    params.require(:answer).permit(:title, :question_id)
   end
 end
