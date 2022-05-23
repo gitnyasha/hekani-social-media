@@ -1,0 +1,18 @@
+databases:
+  - name: hekani_social_media
+    databaseName: hekani_social_media
+    user: hekani_social_media
+
+services:
+  - type: web
+    name: hekani_social_media
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hekani_social_media
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
