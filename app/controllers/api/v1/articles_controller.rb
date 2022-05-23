@@ -7,7 +7,7 @@ module Api
         @art = []
         current_user = User.find(session[:user_id])
         if current_user
-          @articles = Article.where(article_category_id: current_user.articles_subscribed).limit(params[:limit]).offset(params[:offset]).order(created_at: :desc)
+          @articles = Article.where(article_category_id: current_user.articles_subscribed).limit(params[:limit]).offset(params[:offset])
           @articles.each do |article|
             @user = User.find(article.user_id)
             @category = ArticleCategory.find(article.article_category_id)
