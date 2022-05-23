@@ -4,8 +4,16 @@ module Api
       def show
         @user = User.find(session[:user_id])
         @articles = @user.articles
-        @following = @user.following
-        @followers = @user.followers
+        @following = []
+        @followers = []
+
+        @user.following.each do |following|
+          @following.push({ id: following.id, name: following.name, bio: following.bio})
+        end
+
+        @user.followers.each do |follower|
+          @followers.push({ id: follower.id, name: follower.name, bio: follower.bio})
+        end
 
         # user feed
         @myfeed = []
