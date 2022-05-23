@@ -4,7 +4,7 @@ module Api
       before_action :set_answer, only: [:show, :edit, :update, :destroy]
 
       def index
-        @answers = Answer.offset(params[:offset]).order(created_at: :desc)
+        @answers = Answer.limit(params[:limit]).offset(params[:offset]).order(created_at: :desc)
         @allanswers = []
         @answers.each do |answer|
           @question = answer.question = Question.find(answer.question_id)
