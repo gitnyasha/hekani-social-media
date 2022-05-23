@@ -16,7 +16,7 @@ module Api
         category = QuestionCategory.find(params[:followed_id])
         current_user = User.find(session[:user_id])
         if current_user.unsubscribe_question(category)
-          render json: { status: "Success", message: "You are no longer following #{relationship.name}" }
+          render json: { status: "Success" }
         else
           render json: { status: "Error", message: "Something went wrong" }
         end
