@@ -86,6 +86,8 @@ Rails.application.routes.draw do
         resources :votes, only: [:create, :destroy]
       end
 
+      get '/useraccounts', to: 'users#show'
+
       resources :users do
         member do
           get :following, :followers
