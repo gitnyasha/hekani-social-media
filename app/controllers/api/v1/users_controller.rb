@@ -30,6 +30,23 @@ module Api
         @users = @user.followers
         render json: @users
       end
+
+      def update
+        user = User.find(session[:user_id])
+        user.update(
+          name: params["user"]["name"],
+          email: params["user"]["email"],
+          birth: params["user"]["birth"],
+          bio: params["user"]["bio"],
+        )
+        
+        # update user if email is already taken by another user
+        if user.errors.any?
+          render json: { status: "Error updating your account", errors: user.errors }
+        else
+          render json: { status: "Successfully updated your account" }
+        end
+      end
     end
   end
 end

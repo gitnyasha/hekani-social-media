@@ -16,21 +16,6 @@ module Api
         end
       end
 
-      def update
-        user = User.find(session[:user_id])
-        user.update(
-          name: params["user"]["name"],
-          email: params["user"]["email"],
-        )
-        
-        # update user if email is already taken by another user
-        if user.errors.any?
-          render json: { status: "Error updating your account", errors: user.errors }
-        else
-          render json: { status: "Successfully updated your account" }
-        end
-      end
-
       def destroy
         user = User.find(session[:user_id])
         if user.destroy
