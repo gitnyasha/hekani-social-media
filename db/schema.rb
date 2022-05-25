@@ -83,7 +83,6 @@ ActiveRecord::Schema.define(version: 2022_05_25_103938) do
   end
 
   create_table "galleries", force: :cascade do |t|
-    t.string "image"
     t.integer "answer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

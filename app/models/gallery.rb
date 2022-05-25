@@ -1,5 +1,4 @@
 class Gallery < ApplicationRecord
-  mount_uploader :image, ImageUploader
-
   belongs_to :answer
+  has_one_attached :image
 end

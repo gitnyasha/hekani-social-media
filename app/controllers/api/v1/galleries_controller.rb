@@ -13,7 +13,7 @@ module Api
       private
 
       def gallery_params
-        params.require(:gallery).permit(:image, :answer_id)
+        params.permit(:image, :answer_id)
       end
     end
   end
