@@ -106,6 +106,7 @@ Rails.application.routes.draw do
       post '/follow_article', to: "user_article_relationships#create"
       delete '/unfollow_question', to: "user_question_relations#destroy"
       post '/follow_question', to: "user_question_relations#create"
+      post '/gallery', to: "galleries#create"
       delete :logout, to: "sessions#logout"
       get :logged_in, to: "sessions#logged_in"
       root to: "static#home"

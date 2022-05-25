@@ -30,10 +30,10 @@ module Api
       end
 
       def create
-        @question = Question.find(params[:question_id])
+        question = Question.find(params[:question_id])
         current_user = User.find(session[:user_id])
         @answer = current_user.answers.build(answers_params)
-        @answer.question_id = @question.id
+        @answer.question_id = question.id
         if @answer.save
           render json: { status: "success", answer: @answer }
         else

@@ -94,7 +94,7 @@
                     <strong><%= answer.question.title if answer.question %>?</strong>
                   <% end %>
                 </p>
-                <p class="mb-3 tx-14"><%= answer.title.to_plain_text.truncate(60) %></p>
+                <p class="mb-3 tx-14"><%= answer.title.truncate(60) %></p>
               </div>
               <div class="card-footer">
                 <div class="d-flex post-actions">

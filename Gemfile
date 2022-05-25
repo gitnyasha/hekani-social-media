@@ -38,6 +38,7 @@ gem "omniauth-github", "~> 1.3"
 gem "omniauth-twitter", "~> 1.4"
 gem "whenever", require: false
 gem "pagy", "~> 3.7"
+gem 'active_model_serializers'
 gem "faker", :git => "https://github.com/faker-ruby/faker.git", :branch => "master"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false

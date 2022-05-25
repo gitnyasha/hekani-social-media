@@ -3,8 +3,8 @@ class Answer < ApplicationRecord
   belongs_to :user
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :galleries, dependent: :destroy
   # has_rich_text :title
-  has_many_attached :images
 
   def voted_by?(user)
     votes.exists?(user_id: user.id)

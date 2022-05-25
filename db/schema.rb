@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_172818) do
+ActiveRecord::Schema.define(version: 2022_05_25_103938) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -80,6 +80,14 @@ ActiveRecord::Schema.define(version: 2021_11_10_172818) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
     t.integer "answer_id"
+  end
+
+  create_table "galleries", force: :cascade do |t|
+    t.string "image"
+    t.integer "answer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["answer_id"], name: "index_galleries_on_answer_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -165,6 +173,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_172818) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "galleries", "answers"
   add_foreign_key "likes", "articles"
   add_foreign_key "likes", "users"
   add_foreign_key "votes", "answers"
